@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8g2r8wme3jor"
-path="res://.godot/imported/2alabama beach mouse.jpg-3b5abe8f75043f353e17d37029884e48.ctex"
+uid="uid://b3kr4crda7jt0"
+path="res://.godot/imported/alabama beach mouse.jpg-1a9933180685a8b38a83c9ecd7b9a86b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animals/2alabama beach mouse.jpg"
-dest_files=["res://.godot/imported/2alabama beach mouse.jpg-3b5abe8f75043f353e17d37029884e48.ctex"]
+source_file="res://assets/animals/alabama beach mouse.jpg"
+dest_files=["res://.godot/imported/alabama beach mouse.jpg-1a9933180685a8b38a83c9ecd7b9a86b.ctex"]
 
 [params]
 

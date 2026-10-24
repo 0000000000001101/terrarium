@@ -8,24 +8,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="." unique_id=757266158]
-layout_mode = 0
-offset_right = 328.0
-offset_bottom = 78.0
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=411609789]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MyTabContainer" type="TabContainer" parent="." unique_id=757266158]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_vertical = 2
+size_flags_horizontal = 3
 current_tab = 0
 
-[node name="Animals" type="VBoxContainer" parent="TabContainer" unique_id=534765816]
+[node name="Animals" type="VBoxContainer" parent="MyTabContainer" unique_id=534765816]
 custom_maximum_size = Vector2(400, -1)
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Label" type="Label" parent="TabContainer/Animals" unique_id=1670273984]
+[node name="Label" type="Label" parent="MyTabContainer/Animals" unique_id=1670273984]
 layout_mode = 2
 text = "test label"
 horizontal_alignment = 1
+autowrap_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Animals" unique_id=1148595282]
-custom_maximum_size = Vector2(320, -1)
+[node name="MyMarginContainer" type="MarginContainer" parent="MyTabContainer/Animals" unique_id=1148595282]
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
@@ -33,22 +46,19 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MyScrollContainer" type="ScrollContainer" parent="TabContainer/Animals/MarginContainer" unique_id=1132767525]
+[node name="MyScrollContainer" type="ScrollContainer" parent="MyTabContainer/Animals/MyMarginContainer" unique_id=1132767525]
 custom_minimum_size = Vector2(0, 550)
-custom_maximum_size = Vector2(300, -1)
-clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
-offset_transform_enabled = true
 horizontal_scroll_mode = 0
 
-[node name="MyVBoxContainer" type="VBoxContainer" parent="TabContainer/Animals/MarginContainer/MyScrollContainer" unique_id=982994844]
-custom_minimum_size = Vector2(200, 200)
+[node name="MyVBoxContainer" type="VBoxContainer" parent="MyTabContainer/Animals/MyMarginContainer/MyScrollContainer" unique_id=982994844]
 layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
 offset_transform_enabled = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Animals/MarginContainer/MyScrollContainer/MyVBoxContainer" unique_id=677832252]
+[node name="TextureRect" type="TextureRect" parent="MyTabContainer/Animals/MyMarginContainer/MyScrollContainer" unique_id=1695621391]
 layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Animals/MarginContainer/MyScrollContainer/MyVBoxContainer" unique_id=1422187931]
-layout_mode = 2
+expand_mode = 1
+stretch_mode = 5

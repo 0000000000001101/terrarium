@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cr6dlu1r51ds4"
-path="res://.godot/imported/1angry hedgehog.png-9a81f700ba3c20ff5554dd9b7916f014.ctex"
+uid="uid://clbuxik6ms70q"
+path="res://.godot/imported/angry hedgehog.png-3edc9d7dc710bae0f9ef1d45af01006a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animals/1angry hedgehog.png"
-dest_files=["res://.godot/imported/1angry hedgehog.png-9a81f700ba3c20ff5554dd9b7916f014.ctex"]
+source_file="res://assets/animals/angry hedgehog.png"
+dest_files=["res://.godot/imported/angry hedgehog.png-3edc9d7dc710bae0f9ef1d45af01006a.ctex"]
 
 [params]
 
