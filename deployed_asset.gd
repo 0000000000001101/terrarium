@@ -10,15 +10,11 @@ var info = {
 	details = "null"
 }
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-func create(type: String, image_path: String, index: int):
+func create(type: String, image_path: String, index: int, size: Vector2):
 	var txt_file_path = "res://assets/" + str(type) + "s/descriptions/" + str(type) + "_descriptions.txt"
 	#print(txt_file_path)
 	var file = FileAccess.open(txt_file_path, FileAccess.READ)
@@ -50,3 +46,6 @@ func generate_uuid() -> String:
 	uuid = uuid.trim_suffix("-") # get rid of the excess - added to the end
 	
 	return uuid
+
+func _on_gui_input(event: InputEvent):
+	print("touched")

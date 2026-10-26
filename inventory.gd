@@ -9,16 +9,32 @@ static var animal_images
 func _ready() -> void:
 	
 	# Set anchor settings to default
-	set_anchors_preset(Control.PRESET_FULL_RECT)
-	set_offsets_preset(Control.PRESET_FULL_RECT)
+	#set_anchors_preset(Control.PRESET_FULL_RECT)
+	#set_offsets_preset(Control.PRESET_FULL_RECT)
+	var inventory = get_tree().root.find_child("Inventory", true, false)
+	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
+	
+	inventory.size.y = get_viewport_rect().size.y
+	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
+	inventory.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
+	tab_container.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
 
 	animal_images = create_image_array("res://assets/animals")
 	var animal_names = create_name_array(animal_images)
+
+	load_images(animal_images, "animal")
+	
+	inventory.position = Vector2(0, 0)
+	tab_container.position = Vector2(0, 0)
+	
+	# There is some weird sizing discrepancies where the children are bigger than their parents. If you have time later, try to figure this out.
+	inventory.size.y = get_viewport_rect().size.y
+	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
+	inventory.position = Vector2(0, 0)
+	tab_container.global_position = Vector2(0, 0)
 	
 	#print_sizing_details()
 
-	load_images(animal_images, "animal")
-			
 	# .connect() functions as an event listener. size_changed is the event, called a signal in godot.
 	get_tree().root.size_changed.connect(_on_window_resized)
 
@@ -64,11 +80,17 @@ func _on_window_resized() -> void:
 	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
 	var animals_container = get_tree().root.find_child("Animals", true, false)
 	var inventory = get_tree().root.find_child("Inventory", true, false)
-	var asset_size = inventory.size.x * tab_container.anchor_right / 2
+	
+	inventory.size.y = get_viewport_rect().size.y
+	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
+	inventory.position = Vector2(0, 0)
+	tab_container.global_position = Vector2(0, 0)
 	
 	tab_container.size.y = inventory.size.y
-	tab_container.size.x = inventory.size.x * tab_container.anchor_right
+	tab_container.size.x = inventory.size.x
 	animals_container.size.y = inventory.size.y
+	
+	var asset_size = inventory.size.x / 2
 	
 	var full_asset_sizes:Array[float]
 	
@@ -100,19 +122,21 @@ func print_sizing_details() -> void:
 	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
 	var scroll_container = get_tree().root.find_child("MyScrollContainer", true, false)
 	var inventory = get_tree().root.find_child("Inventory", true, false)
-	#var canvas = get_tree().root.find_child("Canvas", true, false)
-	var asset_size = inventory.size.x * tab_container.anchor_right / 2
+	var canvas = get_tree().root.find_child("Canvas", true, false)
+	var asset_size = inventory.size.x / 2
 	
 	print("inventory: " + str(inventory.size))
-	#print("canvas: " + str(canvas.size))
+	print("canvas: " + str(canvas.size))
 	print("tab: " + str(tab_container.size))
 	print("animals: " + str(animals.size))
 	print("margin: " + str(margin.size))
 	print("scroll: " + str(scroll_container.size))
 	print("vbox: " + str(grid.size))
-	print("\nnum: " + str(asset_size))
+	print("\nasset_size: " + str(asset_size))
 	print("anchor_right: " + str(tab_container.anchor_right))
 	print("viewport: " + str(get_viewport_rect().size))
+	print("Inventory Global Position: ", inventory.global_position)
+	print("tab Global Position: ", tab_container.global_position)
 	print("")
 	
 func load_images(paths: Array[String], type: String) -> void:
@@ -172,8 +196,8 @@ func load_images(paths: Array[String], type: String) -> void:
 			new_rect2.add_to_group(type + "_assets")
 			
 			# make draggable
-			new_rect1.gui_input.connect(Draggables._on_gui_input.bind(new_rect1.name)) # gui_input is a signal
-			new_rect2.gui_input.connect(Draggables._on_gui_input.bind(new_rect2.name))
+			new_rect1.gui_input.connect(Draggables._on_gui_input.bind(new_rect1.name, new_rect1.custom_minimum_size)) # gui_input is a signal
+			new_rect2.gui_input.connect(Draggables._on_gui_input.bind(new_rect2.name, new_rect2.custom_minimum_size))
 			
 		else: # only one image left
 			
@@ -202,7 +226,7 @@ func load_images(paths: Array[String], type: String) -> void:
 			new_rect.add_to_group(type + "_assets")
 			
 			# make draggable
-			new_rect.gui_input.connect(Draggables._on_gui_input.bind(new_rect.name))
+			new_rect.gui_input.connect(Draggables._on_gui_input.bind(new_rect.name, new_rect.custom_minimum_size))
 	
 func resize_multiple_assets(image1: CompressedTexture2D , image2: CompressedTexture2D , asset_size: int) -> Array[float]:
 	var size_list:Array[float] = [0, 0]

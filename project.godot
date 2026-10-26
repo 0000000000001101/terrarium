@@ -18,8 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Inventory="*uid://bvtx6w1h45ye"
-Draggables="*uid://bqrod5w1mmdrp"
 ServerManager="*uid://bbpv2a3cbjf6l"
+Draggables="*uid://bqrod5w1mmdrp"
 
 [display]
 
