@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://h3c7ppww80sl"]
 
-[node name="Canvas" type="Control" unique_id=1553678007]
+[ext_resource type="Texture2D" uid="uid://duvq8pdxibtgm" path="res://assets/canvas texture 2.jpg" id="1_75aqd"]
+
+[node name="Terrarium" type="Control" unique_id=471686723]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=411609789]
-visible = false
+[node name="Canvas" type="Control" parent="." unique_id=1168955981]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,27 +20,48 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MyTabContainer" type="TabContainer" parent="." unique_id=757266158]
+[node name="TextureRect" type="TextureRect" parent="Canvas" unique_id=1663474647]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_75aqd")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Inventory" type="Control" parent="." unique_id=1553678007]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+offset_transform_enabled = true
+
+[node name="MyTabContainer" type="TabContainer" parent="Inventory" unique_id=757266158]
+custom_minimum_size = Vector2(1, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.25
 anchor_bottom = 1.0
-grow_vertical = 2
 size_flags_horizontal = 3
 current_tab = 0
 
-[node name="Animals" type="VBoxContainer" parent="MyTabContainer" unique_id=534765816]
-custom_maximum_size = Vector2(400, -1)
+[node name="Animals" type="VBoxContainer" parent="Inventory/MyTabContainer" unique_id=534765816]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Label" type="Label" parent="MyTabContainer/Animals" unique_id=1670273984]
+[node name="Label" type="Label" parent="Inventory/MyTabContainer/Animals" unique_id=1670273984]
 layout_mode = 2
 text = "test label"
 horizontal_alignment = 1
 autowrap_mode = 1
 
-[node name="MyMarginContainer" type="MarginContainer" parent="MyTabContainer/Animals" unique_id=1148595282]
+[node name="MyMarginContainer" type="MarginContainer" parent="Inventory/MyTabContainer/Animals" unique_id=1148595282]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -46,19 +70,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MyScrollContainer" type="ScrollContainer" parent="MyTabContainer/Animals/MyMarginContainer" unique_id=1132767525]
-custom_minimum_size = Vector2(0, 550)
+[node name="MyScrollContainer" type="ScrollContainer" parent="Inventory/MyTabContainer/Animals/MyMarginContainer" unique_id=1132767525]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="MyVBoxContainer" type="VBoxContainer" parent="MyTabContainer/Animals/MyMarginContainer/MyScrollContainer" unique_id=982994844]
+[node name="MyVBoxContainer" type="VBoxContainer" parent="Inventory/MyTabContainer/Animals/MyMarginContainer/MyScrollContainer" unique_id=982994844]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
 offset_transform_enabled = true
-
-[node name="TextureRect" type="TextureRect" parent="MyTabContainer/Animals/MyMarginContainer/MyScrollContainer" unique_id=1695621391]
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5

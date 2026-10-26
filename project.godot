@@ -17,7 +17,14 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GridBoxes="*uid://teybnvyqdb1s"
+Inventory="*uid://bvtx6w1h45ye"
+Draggables="*uid://bqrod5w1mmdrp"
+ServerManager="*uid://bbpv2a3cbjf6l"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [dotnet]
 
