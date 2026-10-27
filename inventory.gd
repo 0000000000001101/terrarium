@@ -4,6 +4,7 @@ extends Control
 
 signal dragged
 static var animal_images
+static var plant_images
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,9 +21,10 @@ func _ready() -> void:
 	tab_container.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
 
 	animal_images = create_image_array("res://assets/animals")
-	var animal_names = create_name_array(animal_images)
+	plant_images = create_image_array("res://assets/plants")
 
 	load_images(animal_images, "animal")
+	load_images(plant_images, "plant")
 	
 	inventory.position = Vector2(0, 0)
 	tab_container.position = Vector2(0, 0)
@@ -68,13 +70,9 @@ func create_name_array(image_array: Array[String]) -> Variant:
 		new_name = new_name.split("/")[len(new_name.split("/")) - 1]
 		array.append(new_name)
 	
-	#print(array)
 	return array
 	
 func _on_window_resized() -> void:
-	#print("window resized")
-	#randomize()
-	
 	var assets = get_tree().get_nodes_in_group("animal_assets")
 	
 	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
@@ -116,11 +114,11 @@ func _on_window_resized() -> void:
 # used for debugging resizing issues
 func print_sizing_details() -> void:
 	
-	var grid = get_tree().root.find_child("MyVBoxContainer", true, false)
+	var grid = get_tree().root.find_child("AnimalVBox", true, false)
 	var animals = get_tree().root.find_child("Animals", true, false)
-	var margin = get_tree().root.find_child("MyMarginContainer", true, false)
+	var margin = get_tree().root.find_child("AnimalMargin", true, false)
 	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
-	var scroll_container = get_tree().root.find_child("MyScrollContainer", true, false)
+	var scroll_container = get_tree().root.find_child("AnimalScroll", true, false)
 	var inventory = get_tree().root.find_child("Inventory", true, false)
 	var canvas = get_tree().root.find_child("Canvas", true, false)
 	var asset_size = inventory.size.x / 2
@@ -145,7 +143,7 @@ func load_images(paths: Array[String], type: String) -> void:
 	var full_asset_sizes:Array[float]
 	
 	# get tree items
-	var grid = get_tree().root.find_child("MyVBoxContainer", true, false)
+	var grid = get_tree().root.find_child(type + "VBox", true, false)
 	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
 	var inventory = get_tree().root.find_child("Inventory", true, false)
 	var asset_size = inventory.size.x * tab_container.anchor_right / 2
@@ -225,6 +223,7 @@ func load_images(paths: Array[String], type: String) -> void:
 			# add node to group "type_assets" (once they are in the tree)
 			new_rect.add_to_group(type + "_assets")
 			
+			
 			# make draggable
 			new_rect.gui_input.connect(Draggables._on_gui_input.bind(new_rect.name, new_rect.custom_minimum_size))
 	
@@ -234,23 +233,23 @@ func resize_multiple_assets(image1: CompressedTexture2D , image2: CompressedText
 	var image1_size:Vector2 = image1.get_size()
 	var image2_size:Vector2 = image2.get_size()
 	
-	var img1_bigger = image1_size.x > image2_size.x
-	
 	var aspect_ratio1 = float(image1_size.x) / float(image1_size.y)
 	var aspect_ratio2 = float(image2_size.x) / float(image2_size.y)
 	
+	var img1_wider = aspect_ratio1 > aspect_ratio2
+	
 	var ratio
 	
-	if aspect_ratio1 > aspect_ratio2:
+	if aspect_ratio1 < aspect_ratio2:
 		ratio = 1 - (aspect_ratio1 / aspect_ratio2)
 	else:
 		ratio = 1 - (aspect_ratio2 / aspect_ratio1)
 	
-	if img1_bigger: # first image is wider
-		size_list[0] = asset_size + asset_size * ratio #236
-		size_list[1] = asset_size - asset_size * ratio #164
+	if img1_wider: # first image is wider
+		size_list[0] = asset_size + asset_size * ratio
+		size_list[1] = asset_size - asset_size * ratio
 	else: # second image is wider
-		size_list[0] = asset_size - asset_size * ratio #236
+		size_list[0] = asset_size - asset_size * ratio
 		size_list[1]  = asset_size + asset_size * ratio
 		
 	return size_list

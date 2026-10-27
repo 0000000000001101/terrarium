@@ -56,13 +56,13 @@ current_tab = 0
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="Label" type="Label" parent="Inventory/MyTabContainer/Animals" unique_id=1670273984]
+[node name="AnimalLabel" type="Label" parent="Inventory/MyTabContainer/Animals" unique_id=1670273984]
 layout_mode = 2
-text = "test label"
+text = "Animals"
 horizontal_alignment = 1
 autowrap_mode = 1
 
-[node name="MyMarginContainer" type="MarginContainer" parent="Inventory/MyTabContainer/Animals" unique_id=1148595282]
+[node name="AnimalMargin" type="MarginContainer" parent="Inventory/MyTabContainer/Animals" unique_id=1148595282]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -71,12 +71,43 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MyScrollContainer" type="ScrollContainer" parent="Inventory/MyTabContainer/Animals/MyMarginContainer" unique_id=1132767525]
+[node name="AnimalScroll" type="ScrollContainer" parent="Inventory/MyTabContainer/Animals/AnimalMargin" unique_id=1132767525]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="MyVBoxContainer" type="VBoxContainer" parent="Inventory/MyTabContainer/Animals/MyMarginContainer/MyScrollContainer" unique_id=982994844]
+[node name="animalVBox" type="VBoxContainer" parent="Inventory/MyTabContainer/Animals/AnimalMargin/AnimalScroll" unique_id=982994844]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+offset_transform_enabled = true
+
+[node name="Plants" type="VBoxContainer" parent="Inventory/MyTabContainer" unique_id=1403582233]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="PlantLabel" type="Label" parent="Inventory/MyTabContainer/Plants" unique_id=1710445840]
+layout_mode = 2
+text = "Plants"
+horizontal_alignment = 1
+autowrap_mode = 1
+
+[node name="PlantMargin" type="MarginContainer" parent="Inventory/MyTabContainer/Plants" unique_id=78760619]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlantScroll" type="ScrollContainer" parent="Inventory/MyTabContainer/Plants/PlantMargin" unique_id=1128324154]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="plantVBox" type="VBoxContainer" parent="Inventory/MyTabContainer/Plants/PlantMargin/PlantScroll" unique_id=1442929683]
 layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
