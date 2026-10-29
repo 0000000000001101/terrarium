@@ -1,0 +1,64 @@
+Deployed asset added onto canvas:
+
+{
+    "message_type": "asset_created",
+    "uuid": String,
+    "type": String,
+    "image_path": String,
+    "description": String,
+    "position": {
+        "x": int,
+    "y" : int
+    },
+    "size": {
+    "x": int,
+    "y": int
+    },
+    "layer": int,
+    "rotation": int (Rad)
+}
+
+Deployed asset deleted from canvas:
+
+{
+    "message_type": "asset_deleted",
+    "uuid": String
+}
+
+Deployed asset layering reordered:
+
+{
+    "message_type": "asset_layer_reordered",
+    "uuid": String,
+    "layer": int
+}
+
+When moving existing deployed asset:
+
+{
+    "message_type": "asset_moved",
+    "uuid": String,
+    "position": {
+    "x": int,
+    "y": int
+    }
+}
+
+When resizing existing deployed asset:
+
+{
+    "message_type": "asset_resized",
+    "uuid": String,
+    "size": {
+    "x": int,
+    "y": int
+    }
+}
+
+When rotating existing deployed asset:
+
+{
+    "message_type": "asset_rotated",
+    "uuid": String,
+    "rotation": int
+}
