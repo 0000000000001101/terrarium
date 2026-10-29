@@ -7,17 +7,16 @@ var socket = WebSocketPeer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Initiate connection to the given URL
 	var err = socket.connect_to_url(websocket_url)
+	# Initiate connection to the given URL
 	if err == OK:
-		print("Cnnecting to %s..." % websocket_url)
+		print("Connecting to %s..." % websocket_url)
 		# Wait for the socket to connect
 		await get_tree().create_timer(2).timeout
 		
 		# Send data
 		print("> Sending test packet.")
-		socket.send_text("Tyaboooboo")
-		socket.send_text("{\"message\": 1}")
+		socket.send_text("test")
 	else:
 		push_error("Unable to connect.")
 		set_process(false)
@@ -62,7 +61,6 @@ func create_deployed_asset(type: String, string_path: String, index: int, size: 
 	deployable.custom_minimum_size = size
 	deployable.position = position
 	deployable.info["position"] = position
-	#print(deployable.size)
 	
 	var canvas = get_tree().root.find_child("Canvas", true, false)
 	canvas.add_child(deployable)
@@ -71,25 +69,74 @@ func create_deployed_asset(type: String, string_path: String, index: int, size: 
 	
 	#object_created(deployable)
 	
-# updates the server whenever an assets is moved (specifically, when mouse released)
-func update_asset():
-	print("asset updated")
-	
 # client tells server an asset was made
-func object_created(deployable: DeployedAsset):
-	pass
-	# {
-	# 
-	#
-	# }
-	#json= newJ SON()
-	#json["UUID"] = uuid
-	#blah blah set more stuff
-	#deployable.info["uuid"]
-	#socket.send_text(json.tostring)
-	
+func asset_created(deployable: DeployedAsset) -> void:
+	var data = {
+		"message_type": "asset_created",
+		"uuid": deployable.info["uuid"],
+		"type": deployable.info["uuid"],
+		"image_path": deployable.info["image_path"],
+		"description": deployable.info["description"],
+		"position": {
+			"x": deployable.info["position"].x,
+			"y": deployable.info["position"].y
+		},
+		"size": { 
+			"x": deployable.info["size"].x,
+			"y": deployable.info["size"].y
+		},
+		"layer": deployable.info["layer"],
+		"rotation": deployable.info["rotation"]
+	}
+	socket.send_text(JSON.stringify(data))
+
+func asset_deleted(deployable: DeployedAsset) -> void:
+	var data = {
+		"message_type": "asset_deleted",
+		"uuid": deployable.info["uuid"]
+	}
+	socket.send_text(JSON.stringify(data))
+
+func asset_moved(deployable: DeployedAsset) -> void:
+	var data = {
+		"message_type": "asset_moved",
+		"uuid": deployable.info["uuid"],
+		"position": {
+			"x": deployable.info["position"].x,
+			"y": deployable.info["position"].y
+		}
+	}
+	socket.send_text(JSON.stringify(data))
+
+func asset_layer_reordered(deployable: DeployedAsset) -> void:
+	var data = {
+		"message_type": "asset_layer_reordered",
+		"uuid": deployable.info["uuid"],
+		"layer": deployable.info["layer"]
+	}
+	socket.send_text(JSON.stringify(data))
+
+func asset_resized(deployable: DeployedAsset) -> void:
+	var data = {
+		"message_type": "asset_resized",
+		"uuid": deployable.info["uuid"],
+		"size": {
+			"x": deployable.info["size"].x,
+			"y": deployable.info["size"].y
+		}
+	}
+	socket.send_text(JSON.stringify(data))
+
+func asset_rotated(deployable: DeployedAsset) -> void:
+	var data = {
+		"message_type": "asset_rotated",
+		"uuid": deployable.info["uuid"],
+		"rotation": deployable.info["rotation"]
+	}
+	socket.send_text(JSON.stringify(data))
+
 # server tells client an asset was made
-func server_object_created(jsonmsg: String):
+func server_asset_created(jsonmsg: String):
 	pass
 	# {
 	# 

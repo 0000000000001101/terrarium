@@ -16,13 +16,11 @@ Priority:
 
 
 
-* Fix positioning of the deployed\_assets when they are dragged onto the canvas. The x values are more or less fine, +/- a few pixels. The y values have issues though because I'm dividing the viewport height by the ceil(index/2), which causes issues when the total index count > 6.
-
-
-
 * Start networking. Set up a connection to the server such that the client sends updated information to the server every time a deployed\_asset is moved (specifically every time the image is dropped after being dragged).
 
 &#x20;       Eventually I will need to get information from the server upon loading the scene for the first time to load in the deployed\_assets.
+
+  * Find another way to turn the data into a string. Right now JSON alphabetizes the array. I don't know if this is an issue or not, though.
 
 
 
@@ -35,13 +33,31 @@ Priority:
 
 
 
-* Add a theme! Make it pretty
+* Add a theme! Make it pretty :)
+
+  * Make the theme pixel offsets in relation to the viewport size
 
 
 
+* (It may be fixed?) There is a weird bug when it comes to hiding/showing the radial menu when images are spam moved/clicked on in quick succession where every subsequent click will hide/show the menu such that it cannot be hidden again unless it is moved or another asset is clicked. This does not seem to be a huge hinderance, however.
 
+
+
+* Have the draggable from the inventory be displayed above the inventory.
+
+
+
+* Have the wheel spawn in relation to the image aspect ratio.
+
+
+
+* Glass jar selection screen
 
 
 
 Future goals:
+
+
+
+* Background selector?
 

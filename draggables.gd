@@ -32,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		
 		if asset_being_dragged != null:
 			tween.tween_property(deployed_assets[0], "position", Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y), delay * delta)
-		
+			
 # called whenever select gui elements are interacted with. called from inventory.gd
 func _on_gui_input(event: InputEvent, name: String, size: Vector2) -> void:
 	# mouse presses
@@ -101,8 +101,8 @@ func create_drag_image(type:String, assets:Array, name, size: Vector2) -> void:
 	image_copy.size.x = 100
 	
 	var inventory_assets = get_tree().get_nodes_in_group(type + "_assets")
-	image_copy.position.x = inventory_assets[index].position.x
-	image_copy.position.y = ((get_viewport_rect().size.y - 40) / 4 * ceil(index / 2)) + 30
+	image_copy.position.x = inventory_assets[index].global_position.x
+	image_copy.position.y = inventory_assets[index].get_parent().global_position.y
 	
 	canvas.add_child(image_copy)
 	

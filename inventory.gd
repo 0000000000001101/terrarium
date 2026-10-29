@@ -86,7 +86,7 @@ func _on_window_resized() -> void:
 	
 	tab_container.size.y = inventory.size.y
 	tab_container.size.x = inventory.size.x
-	animals_container.size.y = inventory.size.y
+	animals_container.size.y = inventory.size.y - 45
 	
 	var asset_size = inventory.size.x / 2
 	
@@ -184,8 +184,6 @@ func load_images(paths: Array[String], type: String) -> void:
 			
 			h_box.add_child(new_rect1)
 			h_box.add_child(new_rect2)
-			
-			#print("size of hbox: " + str(h_box.size.x)) # 0
 			
 			grid.add_child(h_box)
 			
