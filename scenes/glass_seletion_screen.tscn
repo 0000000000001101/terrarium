@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cpx6hinxrxbb1"]
+
+[ext_resource type="Texture2D" uid="uid://c5rrqw1r844m7" path="res://assets/glass/glass jar 1.jpg" id="2_jfkud"]
+[ext_resource type="Texture2D" uid="uid://dw4co23281626" path="res://assets/animals/raccoon - Copy.jpg" id="2_m206c"]
+[ext_resource type="Texture2D" uid="uid://do35wtk6s1gxt" path="res://assets/glass/glass jar 2.webp" id="3_jwbxu"]
+[ext_resource type="Texture2D" uid="uid://co528kbgteorf" path="res://assets/glass/glass jar 3.jpg" id="4_m86fa"]
+
+[node name="GlassSeletionScreen" type="Control" unique_id=1382801681]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1211873777]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_m206c")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Glass1" type="TextureButton" parent="." unique_id=551229953]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 163.0
+offset_right = 365.0
+offset_bottom = 291.0
+texture_normal = ExtResource("2_jfkud")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Glass2" type="TextureButton" parent="." unique_id=1607987429]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 161.0
+offset_right = 627.0
+offset_bottom = 289.0
+texture_normal = ExtResource("3_jwbxu")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Glass3" type="TextureButton" parent="." unique_id=659615439]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_left = 765.0
+offset_top = 166.0
+offset_right = 893.0
+offset_bottom = 294.0
+texture_normal = ExtResource("4_m86fa")
+ignore_texture_size = true
+stretch_mode = 0
