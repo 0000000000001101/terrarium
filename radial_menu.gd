@@ -3,6 +3,14 @@ extends Control
 
 static var radius = 90
 static var speed = 0.25
+var rotating = false
+var theta = 0
+var starting_position
+var starting_position_x
+var starting_position_y
+var starting_angle
+var diff_x
+var diff_y
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -66,9 +74,21 @@ func on_rotate_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			print("rotate button clicked")
+			#starting_angle = self.get_parent().rotation
+			rotating = true
+			
+		elif event.is_released():
+			print("rotate button released")
+			rotating = false
+			# update ServerManager
+			ServerManager.asset_rotated(get_parent())
 			
 	elif event is InputEventMouseMotion:
-		pass
+		if rotating:
+			diff_x = get_parent().pivot_point.x - get_viewport().get_mouse_position().x
+			diff_y = get_parent().pivot_point.y - get_viewport().get_mouse_position().y
+			theta = - atan2(diff_x, diff_y)
+			print(rad_to_deg(theta))
 	
 func on_description_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

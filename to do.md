@@ -24,15 +24,6 @@ Priority:
 
 
 
-* Allow the assets to be resized on the canvas.
-
-  * Send packet to server upon resize
-* Allow the assets to be deleted on the canvas.
-
-  * Send packet to server upon deletion
-
-
-
 * Add a theme! Make it pretty :)
 
   * Make the theme pixel offsets in relation to the viewport size
@@ -43,7 +34,7 @@ Priority:
 
 
 
-* Have the draggable from the inventory be displayed above the inventory.
+* Have the draggable from the inventory be displayed above the inventory. (Layer or z layer property?)
 
 
 
@@ -51,7 +42,10 @@ Priority:
 
 
 
-* Glass jar selection screen
+* Allow the assets to be resized on the canvas
+* Allow the layering of the assets be changed around.
+* Make a description pop-up when the description button is pressed.
+* Rename functionality?
 
 
 

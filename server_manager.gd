@@ -49,18 +49,18 @@ func _process(delta: float):
 		var code = socket.get_close_code()
 		print("WebSocket closed with code: %d. Clean %s" % [code, code != -1])
 		set_process(false) # Stop processing.
-			
+
 func create_deployed_asset(type: String, string_path: String, index: int, size: Vector2, position: Vector2):
 	var deployable = DeployedAsset.new()
 	
 	deployable.texture = load(string_path)
-	deployable.create(type, string_path, index, size)
+	
+	deployable.create(type, string_path, index, size, position)
 	deployable.gui_input.connect(deployable._on_gui_input)
 	
 	deployable.expand_mode = deployable.EXPAND_IGNORE_SIZE
 	deployable.custom_minimum_size = size
 	deployable.position = position
-	deployable.info["position"] = position
 	
 	var canvas = get_tree().root.find_child("Canvas", true, false)
 	canvas.add_child(deployable)
@@ -68,7 +68,14 @@ func create_deployed_asset(type: String, string_path: String, index: int, size: 
 	assets.append(deployable)
 	
 	#object_created(deployable)
-	
+
+func glass_selected() -> void:
+	var data = {
+		"message_type": "glass_selected",
+		"glass": GeneralManager.glass_selected
+	}
+	socket.send_text(JSON.stringify(data))
+
 # client tells server an asset was made
 func asset_created(deployable: DeployedAsset) -> void:
 	var data = {

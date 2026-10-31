@@ -1,5 +1,6 @@
 # The code in here is kind of ineffective with the groups and should be refactored later
 
+class_name Draggable
 extends TextureRect
 
 var asset_selected := false
@@ -9,6 +10,8 @@ var index
 var count := 0
 var animal_assets
 var plant_assets
+
+var image_path
 
 # offset between image position and mouse position
 var difference_x
@@ -20,6 +23,9 @@ func _process(delta: float) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Godot creates children before parents. Wait for the parent (Inventory) to be created first
+	await get_tree().process_frame
+	
 	animal_assets = get_tree().get_nodes_in_group("animal_assets")
 	plant_assets = get_tree().get_nodes_in_group("plant_assets")
 
@@ -64,12 +70,12 @@ func _on_gui_input(event: InputEvent, name: String, size: Vector2) -> void:
 			
 			# call server to add a deployed_asset to its list of deployed_assets
 			if name.contains("animal"):
-				ServerManager.create_deployed_asset("animal", Inventory.animal_images[index], index, size, deployed_assets[0].position)
+				ServerManager.create_deployed_asset("animal", image_path, index, size, deployed_assets[0].position)
 				# take "Draggables" node off screen
 				get_tree().call_group("deployed_assets", "queue_free")
 				
 			elif name.contains("plant"):
-				ServerManager.create_deployed_asset("plant", Inventory.plant_images[index], index, size, deployed_assets[0].position)
+				ServerManager.create_deployed_asset("plant", image_path, index, size, deployed_assets[0].position)
 				# take "Draggables" node off screen
 				get_tree().call_group("deployed_assets", "queue_free")
 		
@@ -92,9 +98,9 @@ func create_drag_image(type:String, assets:Array, name, size: Vector2) -> void:
 	var image_copy = TextureRect.new()
 	
 	if type == "animal":
-		image_copy.texture = load(Inventory.animal_images[index])
+		image_copy.texture = load(image_path)
 	elif type == "plant":
-		image_copy.texture = load(Inventory.plant_images[index])
+		image_copy.texture = load(image_path)
 	image_copy.expand_mode = image_copy.EXPAND_IGNORE_SIZE
 	
 	image_copy.custom_minimum_size = assets[index].custom_minimum_size

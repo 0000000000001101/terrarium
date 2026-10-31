@@ -9,9 +9,11 @@ var delay = 5
 
 var difference_x
 var difference_y
+var pivot_point
+var original_position # used in moving pivot_point when asset is moved
 
 var start_time
-var radial_menu
+var radial_menu; var resize_menu
 var radial_menu_showing = false
 var menu_tween_active = false
 # only want one radial menu showing at once
@@ -49,7 +51,15 @@ func _physics_process(delta: float) -> void:
 		tween.tween_property(self, "position", Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y), delay * delta)
 		info["position"] = Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y)
 
-func create(type: String, image_path: String, index: int, size: Vector2):
+	elif $RadialMenu.rotating:
+		#var tween = get_tree().create_tween()
+		
+		# long delays cause for a glitch at the 180 mark where the image full 360 rotates
+		#tween.tween_property(self, "rotation", $RadialMenu.theta, 0.5 * delta)
+		rotation = lerp_angle(rotation, $RadialMenu.theta, 10.0 * delta)
+		#print(str(rad_to_deg($RadialMenu.theta)))
+
+func create(type: String, image_path: String, index: int, size: Vector2, position: Vector2):
 	var txt_file_path = "res://assets/" + str(type) + "s/descriptions/" + str(type) + "_descriptions.txt"
 	var file = FileAccess.open(txt_file_path, FileAccess.READ)
 	var description
@@ -62,8 +72,13 @@ func create(type: String, image_path: String, index: int, size: Vector2):
 		description = file.get_line()
 	
 	info["details"] = description
-	info["size"] = self.size
+	info["size"] = size
+	info["position"] = position
 	info["layer"] = 0
+	
+	pivot_offset = size / 2
+	pivot_point = info["position"] + pivot_offset
+	print(str(info["position"]) + "!!")
 	
 	radial_menu = RadialMenu.new()
 	radial_menu.name = "RadialMenu"
@@ -71,7 +86,13 @@ func create(type: String, image_path: String, index: int, size: Vector2):
 	radial_menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	radial_menu.add_to_group("radial_menus")
 	radial_menu.hide()
-	self.add_child(radial_menu)
+	add_child(radial_menu)
+	
+	resize_menu = ResizeMenu.new()
+	resize_menu.name = "ResizeMenu"
+	resize_menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	resize_menu.hide()
+	add_child(resize_menu)
 	
 	ServerManager.asset_created(self)
 
@@ -102,9 +123,13 @@ func _on_gui_input(event: InputEvent):
 			difference_x = get_viewport().get_mouse_position().x - self.position.x
 			difference_y = get_viewport().get_mouse_position().y - self.position.y
 			
+			original_position = info["position"]
+			
 		elif event.is_released(): # the event is the mouse button being released
 			asset_selected = false
 			asset_dragging = false
+			
+			pivot_point += info["position"] - original_position
 			
 			if Time.get_ticks_msec() - start_time < 200:
 				if not radial_menu_showing and not menu_tween_active:
@@ -121,6 +146,7 @@ func _on_gui_input(event: InputEvent):
 					DeployedAsset.any_radial_menu_showing = true
 					
 					show_radial_menu()
+					show_resize_menu()
 					
 				else:
 					#print("deleting radial menu")
@@ -128,18 +154,20 @@ func _on_gui_input(event: InputEvent):
 					DeployedAsset.any_radial_menu_showing = false
 					
 					hide_radial_menu()
+					hide_resize_menu()
 			
 	# mouse drags
 	elif event is InputEventMouseMotion and asset_selected:
 		#print("dragged")
 		asset_dragging = true
 		
-		# hide any radial menus once you start dragging an asset
+		# hide any radial, resize menus once you start dragging an asset
 		if DeployedAsset.any_radial_menu_showing:
 			# go through radial_menu group and hide them all
 			for menu in get_tree().get_nodes_in_group("radial_menus"):
 				if menu.visible:
 					menu.get_parent().hide_radial_menu()
+					menu.get_parent().hide_resize_menu() # any DeployedAsset with radial menu visible will have resize menu visible too
 					# set radial_menu_showing to false for the DeployedAsset with this menu as its child
 					menu.get_parent().radial_menu_showing = false
 			
@@ -147,6 +175,7 @@ func _on_gui_input(event: InputEvent):
 		DeployedAsset.any_radial_menu_showing = true
 		
 		hide_radial_menu()
+		hide_resize_menu()
 		
 func show_radial_menu() -> void:
 	#print("showing radial menu")

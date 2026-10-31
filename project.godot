@@ -11,15 +11,15 @@ config_version=5
 [application]
 
 config/name="terrarium"
-run/main_scene="uid://h3c7ppww80sl"
+run/main_scene="uid://cpx6hinxrxbb1"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Inventory="*uid://bvtx6w1h45ye"
 ServerManager="*uid://bbpv2a3cbjf6l"
-Draggables="*uid://bqrod5w1mmdrp"
+GeneralManager="*uid://1obimbxvg6xa"
+Transitions="*uid://j7qfpqeaihcp"
 
 [display]
 

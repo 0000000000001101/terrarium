@@ -1,3 +1,10 @@
+Glass jar selected:
+
+{
+    "message_type": "glass_selected",
+    "glass": GeneralManager.glass_selected
+}
+
 Deployed asset added onto canvas:
 
 {

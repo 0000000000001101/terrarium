@@ -1,19 +1,29 @@
 # file set as an Autoload
 
+class_name Inventory
 extends Control
 
-signal dragged
-static var animal_images
-static var plant_images
+static var animal_images = []
+static var plant_images = []
+
+# get tree elements once they load into the tree
+@onready var inventory = self
+@onready var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
+@onready var animals_container = get_tree().root.find_child("Animals", true, false)
+@onready var plants_container = get_tree().root.find_child("Plants", true, false)
+@onready var animal_vbox = get_tree().root.find_child("animalVBox", true, false)
+@onready var plant_vbox = get_tree().root.find_child("plantVBox", true, false)
+@onready var margin = get_tree().root.find_child("AnimalMargin", true, false)
+@onready var scroll_container = get_tree().root.find_child("AnimalScroll", true, false)
+@onready var canvas = get_tree().root.find_child("Canvas", true, false)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("inventory script running")
 	
 	# Set anchor settings to default
 	#set_anchors_preset(Control.PRESET_FULL_RECT)
 	#set_offsets_preset(Control.PRESET_FULL_RECT)
-	var inventory = get_tree().root.find_child("Inventory", true, false)
-	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
 	
 	inventory.size.y = get_viewport_rect().size.y
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
@@ -73,11 +83,8 @@ func create_name_array(image_array: Array[String]) -> Variant:
 	return array
 	
 func _on_window_resized() -> void:
-	var assets = get_tree().get_nodes_in_group("animal_assets")
-	
-	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
-	var animals_container = get_tree().root.find_child("Animals", true, false)
-	var inventory = get_tree().root.find_child("Inventory", true, false)
+	var animal_assets = get_tree().get_nodes_in_group("animal_assets")
+	var plant_assets = get_tree().get_nodes_in_group("animal_assets")
 	
 	inventory.size.y = get_viewport_rect().size.y
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
@@ -87,49 +94,60 @@ func _on_window_resized() -> void:
 	tab_container.size.y = inventory.size.y
 	tab_container.size.x = inventory.size.x
 	animals_container.size.y = inventory.size.y - 45
+	plants_container.size.y = inventory.size.y - 45
 	
-	var asset_size = inventory.size.x / 2
-	
+	var asset_size = inventory.size.x * tab_container.anchor_right / 2
+	# asset widths of the pairs of side by side nodes
 	var full_asset_sizes:Array[float]
 	
-	# change the size of every textureRect in group "library_assets"
-	for i in range(0, len(assets), 2):
-		if i + 1 <= len(assets) - 1: # accessing 2 assets at a time
-			if assets[i] is TextureRect and assets[i + 1] is TextureRect:
-				full_asset_sizes = resize_multiple_assets(load(str(assets[i].texture.resource_path)), load(str(assets[i + 1].texture.resource_path)), asset_size)
-				#assets[i].custom_minimum_size.x = randi_range(100, 500)
-				assets[i].custom_minimum_size.x = full_asset_sizes[0]
-				assets[i + 1].custom_minimum_size.x = full_asset_sizes[1]
+	# change the size of every textureRect in group "animal_assets"
+	for i in range(0, len(animal_assets), 2):
+		if i + 1 <= len(animal_assets) - 1: # accessing 2 assets at a time
+			if animal_assets[i] is TextureRect and animal_assets[i + 1] is TextureRect:
+				full_asset_sizes = resize_multiple_assets(load(str(animal_assets[i].texture.resource_path)), load(str(animal_assets[i + 1].texture.resource_path)), asset_size)
+				#animal_assets[i].custom_minimum_size.x = randi_range(100, 500)
+				animal_assets[i].custom_minimum_size.x = full_asset_sizes[0]
+				animal_assets[i + 1].custom_minimum_size.x = full_asset_sizes[1]
 				
-				assets[i].custom_minimum_size.y = asset_size
-				assets[i + 1].custom_minimum_size.y = asset_size
+				animal_assets[i].custom_minimum_size.y = asset_size
+				animal_assets[i + 1].custom_minimum_size.y = asset_size
 		else: # 1 image left
-			if assets[i] is TextureRect:
-				assets[i].custom_minimum_size.x = asset_size
+			if animal_assets[i] is TextureRect:
+				animal_assets[i].custom_minimum_size.x = asset_size
 				
-				assets[i].custom_minimum_size.y = asset_size
+				animal_assets[i].custom_minimum_size.y = asset_size
+				
+	# change the size of every textureRect in group "plant_assets"
+	for i in range(0, len(plant_assets), 2):
+		if i + 1 <= len(plant_assets) - 1: # accessing 2 assets at a time
+			if plant_assets[i] is TextureRect and plant_assets[i + 1] is TextureRect:
+				full_asset_sizes = resize_multiple_assets(load(str(plant_assets[i].texture.resource_path)), load(str(plant_assets[i + 1].texture.resource_path)), asset_size)
+				#plant_assets[i].custom_minimum_size.x = randi_range(100, 500)
+				plant_assets[i].custom_minimum_size.x = full_asset_sizes[0]
+				plant_assets[i + 1].custom_minimum_size.x = full_asset_sizes[1]
+				
+				plant_assets[i].custom_minimum_size.y = asset_size
+				plant_assets[i + 1].custom_minimum_size.y = asset_size
+		else: # 1 image left
+			if plant_assets[i] is TextureRect:
+				plant_assets[i].custom_minimum_size.x = asset_size
+				
+				plant_assets[i].custom_minimum_size.y = asset_size
 	
 	#print_sizing_details()
 
 # used for debugging resizing issues
 func print_sizing_details() -> void:
 	
-	var grid = get_tree().root.find_child("AnimalVBox", true, false)
-	var animals = get_tree().root.find_child("Animals", true, false)
-	var margin = get_tree().root.find_child("AnimalMargin", true, false)
-	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
-	var scroll_container = get_tree().root.find_child("AnimalScroll", true, false)
-	var inventory = get_tree().root.find_child("Inventory", true, false)
-	var canvas = get_tree().root.find_child("Canvas", true, false)
-	var asset_size = inventory.size.x / 2
+	var asset_size = inventory.size.x * tab_container.anchor_right / 2
 	
 	print("inventory: " + str(inventory.size))
 	print("canvas: " + str(canvas.size))
 	print("tab: " + str(tab_container.size))
-	print("animals: " + str(animals.size))
+	print("animals: " + str(animals_container.size))
 	print("margin: " + str(margin.size))
 	print("scroll: " + str(scroll_container.size))
-	print("vbox: " + str(grid.size))
+	print("animal vbox: " + str(animal_vbox.size))
 	print("\nasset_size: " + str(asset_size))
 	print("anchor_right: " + str(tab_container.anchor_right))
 	print("viewport: " + str(get_viewport_rect().size))
@@ -142,17 +160,13 @@ func load_images(paths: Array[String], type: String) -> void:
 	var index:int = 0
 	var full_asset_sizes:Array[float]
 	
-	# get tree items
-	var grid = get_tree().root.find_child(type + "VBox", true, false)
-	var tab_container = get_tree().root.find_child("MyTabContainer", true, false)
-	var inventory = get_tree().root.find_child("Inventory", true, false)
 	var asset_size = inventory.size.x * tab_container.anchor_right / 2
 	
 	for i in range(0, len(paths), 2):
 		if i + 1 <= len(paths) - 1: # accessing two images at a time. gdscript does not natively support try except blocks
 			# create new TextureRects
-			var new_rect1 = TextureRect.new()
-			var new_rect2 = TextureRect.new()
+			var new_rect1 = Draggable.new()
+			var new_rect2 = Draggable.new()
 			
 			# assign its properties
 			new_rect1.name = type + str(index)
@@ -162,6 +176,9 @@ func load_images(paths: Array[String], type: String) -> void:
 			
 			new_rect1.texture = load(paths[i])
 			new_rect2.texture = load(paths[i + 1])
+			
+			new_rect1.image_path = paths[i]
+			new_rect2.image_path = paths[i + 1]
 			
 			# scaling the images horizontally based on their horizontal ratios
 			
@@ -185,26 +202,31 @@ func load_images(paths: Array[String], type: String) -> void:
 			h_box.add_child(new_rect1)
 			h_box.add_child(new_rect2)
 			
-			grid.add_child(h_box)
+			if type == "animal":
+				animal_vbox.add_child(h_box)
+			elif type == "plant":
+				plant_vbox.add_child(h_box)
 			
 			# add textureRect nodes to group "type_assets". If group does not yet exist, it is created first.
 			new_rect1.add_to_group(type + "_assets")
 			new_rect2.add_to_group(type + "_assets")
 			
 			# make draggable
-			new_rect1.gui_input.connect(Draggables._on_gui_input.bind(new_rect1.name, new_rect1.custom_minimum_size)) # gui_input is a signal
-			new_rect2.gui_input.connect(Draggables._on_gui_input.bind(new_rect2.name, new_rect2.custom_minimum_size))
+			new_rect1.gui_input.connect(new_rect1._on_gui_input.bind(new_rect1.name, new_rect1.custom_minimum_size)) # gui_input is a signal
+			new_rect2.gui_input.connect(new_rect2._on_gui_input.bind(new_rect2.name, new_rect2.custom_minimum_size))
 			
 		else: # only one image left
 			
 			#create one new textureRect
-			var new_rect = TextureRect.new()
+			var new_rect = Draggable.new()
 			
 			# set attributes
 			new_rect.name = type + str(index)
 			index += 1
 			
 			new_rect.texture = load(paths[i])
+			new_rect.image_path = paths[i]
+			
 			new_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			new_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 			# new_rect.size_flags_horizontal = Control.SIZE_EXPAND_FILL # expand image to fill the entire hbox's width
@@ -216,14 +238,16 @@ func load_images(paths: Array[String], type: String) -> void:
 			var h_box = HBoxContainer.new()
 			
 			h_box.add_child(new_rect)
-			grid.add_child(h_box)
+			if type == "animal":
+				animal_vbox.add_child(h_box)
+			elif type == "plant":
+				plant_vbox.add_child(h_box)
 			
 			# add node to group "type_assets" (once they are in the tree)
 			new_rect.add_to_group(type + "_assets")
 			
-			
 			# make draggable
-			new_rect.gui_input.connect(Draggables._on_gui_input.bind(new_rect.name, new_rect.custom_minimum_size))
+			new_rect.gui_input.connect(new_rect._on_gui_input.bind(new_rect.name, new_rect.custom_minimum_size))
 	
 func resize_multiple_assets(image1: CompressedTexture2D , image2: CompressedTexture2D , asset_size: int) -> Array[float]:
 	var size_list:Array[float] = [0, 0]
