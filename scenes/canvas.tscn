@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://34yp6n7a6tox" path="res://icon.svg" id="4_uoc13"]
 [ext_resource type="Script" uid="uid://bvtx6w1h45ye" path="res://inventory.gd" id="7_b5t36"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
+
 [node name="Terrarium" type="Control" unique_id=471686723]
 layout_mode = 3
 anchors_preset = 15
@@ -75,19 +77,29 @@ offset_right = 8.0
 offset_bottom = 8.0
 
 [node name="ResizeMenu" type="Control" parent="Canvas" unique_id=1672696623]
+visible = false
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 1
-anchors_preset = 0
-offset_left = 552.0
-offset_top = 248.0
-offset_right = 592.0
-offset_bottom = 288.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
 script = ExtResource("4_d11g6")
 
 [node name="ResizeButtonTopLeft" type="Button" parent="Canvas/ResizeMenu" unique_id=183402888]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
-icon = ExtResource("4_uoc13")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -89.0
+offset_top = 245.0
+offset_right = 47.0
+offset_bottom = 381.0
+offset_transform_enabled = true
+focus_mode = 0
+focus_behavior_recursive = 1
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rletj")
+icon = ExtResource("4_rjejc")
 
 [node name="ResizeButtonTopRight" type="Button" parent="Canvas/ResizeMenu" unique_id=783161729]
 layout_mode = 0
@@ -97,14 +109,18 @@ icon = ExtResource("4_uoc13")
 
 [node name="ResizeButtonBottomLeft" type="Button" parent="Canvas/ResizeMenu" unique_id=110525016]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 287.0
+offset_top = 78.0
+offset_right = 423.0
+offset_bottom = 214.0
 icon = ExtResource("4_uoc13")
 
 [node name="ResizeButtonBottomRight" type="Button" parent="Canvas/ResizeMenu" unique_id=18801262]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 18.0
+offset_top = 250.0
+offset_right = 154.0
+offset_bottom = 386.0
 icon = ExtResource("4_uoc13")
 
 [node name="Inventory" type="Control" parent="." unique_id=1553678007]

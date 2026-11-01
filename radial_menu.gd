@@ -29,7 +29,7 @@ func _ready() -> void:
 	rotate_button.name = "RotateButton"
 	rotate_button.icon = load("res://assets/smiley placeholder.png")
 	rotate_button.flat = true
-	#rotate_button.anchor_top = 0.0
+	#rotate_button.anchor_top = 0.0 # Don't need. The tween overrides positioning
 	#rotate_button.anchor_left = 0.5
 	#rotate_button.anchor_right = 0.5
 	rotate_button.gui_input.connect(on_rotate_button_clicked)
@@ -39,7 +39,7 @@ func _ready() -> void:
 	reorder_layer_button.name = "ReorderLayerButton"
 	reorder_layer_button.icon = load("res://assets/smiley placeholder.png")
 	reorder_layer_button.flat = true
-	#reorder_layer_button.anchor_top = 0.0
+	#reorder_layer_button.anchor_top = 0.0 # Don't need. The tween overrides positioning
 	#reorder_layer_button.anchor_left = 0.5
 	#reorder_layer_button.anchor_right = 0.5
 	reorder_layer_button.gui_input.connect(on_reorder_layer_button_clicked)
@@ -63,7 +63,9 @@ func on_delete_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			print("delete layer button clicked")
+			ServerManager.asset_deleted(get_parent())
 			self.get_parent().free()
+			# Update server
 
 func on_reorder_layer_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -73,12 +75,12 @@ func on_reorder_layer_button_clicked(event: InputEvent) -> void:
 func on_rotate_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			print("rotate button clicked")
+			#print("rotate button clicked")
 			#starting_angle = self.get_parent().rotation
 			rotating = true
 			
 		elif event.is_released():
-			print("rotate button released")
+			#print("rotate button released")
 			rotating = false
 			# update ServerManager
 			ServerManager.asset_rotated(get_parent())
@@ -88,7 +90,7 @@ func on_rotate_button_clicked(event: InputEvent) -> void:
 			diff_x = get_parent().pivot_point.x - get_viewport().get_mouse_position().x
 			diff_y = get_parent().pivot_point.y - get_viewport().get_mouse_position().y
 			theta = - atan2(diff_x, diff_y)
-			print(rad_to_deg(theta))
+			#print(rad_to_deg(theta))
 	
 func on_description_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

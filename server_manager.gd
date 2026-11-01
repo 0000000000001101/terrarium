@@ -93,7 +93,11 @@ func asset_created(deployable: DeployedAsset) -> void:
 			"y": deployable.info["size"].y
 		},
 		"layer": deployable.info["layer"],
-		"rotation": deployable.info["rotation"]
+		"rotation": deployable.info["rotation"],
+		"pivot_point": { 
+			"x": deployable.info["pivot_point"].x,
+			"y": deployable.info["pivot_point"].y
+		},
 	}
 	socket.send_text(JSON.stringify(data))
 
@@ -111,6 +115,10 @@ func asset_moved(deployable: DeployedAsset) -> void:
 		"position": {
 			"x": deployable.info["position"].x,
 			"y": deployable.info["position"].y
+		},
+		"pivot_point": { 
+			"x": deployable.info["pivot_point"].x,
+			"y": deployable.info["pivot_point"].y
 		}
 	}
 	socket.send_text(JSON.stringify(data))
@@ -130,6 +138,10 @@ func asset_resized(deployable: DeployedAsset) -> void:
 		"size": {
 			"x": deployable.info["size"].x,
 			"y": deployable.info["size"].y
+		},
+		"pivot_point": { 
+			"x": deployable.info["pivot_point"].x,
+			"y": deployable.info["pivot_point"].y
 		}
 	}
 	socket.send_text(JSON.stringify(data))

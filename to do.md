@@ -6,6 +6,10 @@ Priority:
 
 
 
+* The inventory also has some resizing issues. When you go to and from full-screen, it bugs out a bit. The plant assets also have a weird bug where they wont resize to the full width of the scroll container when making the screen smaller than the default (while the animals' do).
+
+
+
 * Normalize the coordinate system. I think I'll set the size of one square to be the size of min(viewport width, viewport height). The normalized coordinates are what will be sent to the server, but the immediate positioning of the assets will of course be in pixels.
 
 &#x20;   Ideas and issues:
@@ -43,9 +47,19 @@ Priority:
 
 
 * Allow the assets to be resized on the canvas
+
+  * Change the pivot point to be centered again, account for 1/2 change in height
+  * Change the size of the resize menu when the asset is resized
 * Allow the layering of the assets be changed around.
+
+  * Add asset names so that 
+
+    * Add rename functionality?
 * Make a description pop-up when the description button is pressed.
-* Rename functionality?
+
+
+
+* Might need to pass pivot\_point and scale to the server too
 
 
 

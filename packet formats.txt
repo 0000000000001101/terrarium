@@ -18,11 +18,16 @@ Deployed asset added onto canvas:
     "y" : int
     },
     "size": {
-    "x": int,
-    "y": int
+        "x": int,
+        "y": int
     },
     "layer": int,
-    "rotation": int (Rad)
+    "rotation": int (Rad),
+    "pivot_point": {
+        "x": int,
+        "y": int
+    }
+
 }
 
 Deployed asset deleted from canvas:
@@ -46,8 +51,12 @@ When moving existing deployed asset:
     "message_type": "asset_moved",
     "uuid": String,
     "position": {
-    "x": int,
-    "y": int
+        "x": int,
+        "y": int
+    },
+    "pivot_point": {
+        "x": int,
+        "y": int
     }
 }
 
@@ -57,8 +66,16 @@ When resizing existing deployed asset:
     "message_type": "asset_resized",
     "uuid": String,
     "size": {
-    "x": int,
-    "y": int
+        "x": int,
+        "y": int
+    },
+    "position": {
+        "x": int,
+        "y": int
+    },
+    "pivot_point": {
+        "x": int,
+        "y": int
     }
 }
 
