@@ -25,14 +25,14 @@ static var any_menu_showing = false
 # dict instead of solo variables so they can be called with a string passed from the server
 var info = {
 	uuid = "null",
+	name = "null", # add
 	type = "null",
 	image_path = "null",
 	description = "null",
 	position = Vector2(),
 	size = Vector2(),
 	layer = 0,
-	rotation = 0,
-	# also, rotation is in radians. use deg_to_rad(degree) if you'd like.
+	rotation = 0, # also, rotation is in radians. use deg_to_rad(degree) if you'd like.
 	pivot_point = Vector2()
 }
 
@@ -108,12 +108,24 @@ func _physics_process(delta: float) -> void:
 				var fixed_top_left = $ResizeMenu.parent_original_position
 				
 				global_position = fixed_top_left
+		
+		var tween = get_tree().create_tween().set_parallel(true)
+		
+		var angle = deg_to_rad(230)
+		for button in $RadialMenu.get_children():
+			if not button.name.contains("Description"):
+				# position math: first it rotates the assets around the radius, then centers the assets along the inner y-axis before adding an offset in relation to self's height #  - Vector2(0.0, size.y / 2 + $RadialMenu/DescriptionButton.size.y / 2 + 4 + 10)
+				# global_position here gets the position of the button before the tween runs, which is at the pivot point. So the pivot point is moved to the top of the image
+				tween.tween_property(button, "position", Vector2(RadialMenu.radius, 0).rotated(angle) - Vector2(0.0, $RadialMenu.global_position.rotated(-rotation).y - global_position.rotated(-rotation).y), RadialMenu.speed)
+				angle += deg_to_rad(40)
+			else:
+				tween.tween_property(button, "position", Vector2(size.x / 2 + $RadialMenu/DescriptionButton.size.x / 2 + 4 + 10, 0.0), RadialMenu.speed).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			
-		info["position"] = global_position
-		pivot_offset = size / 2
-		#Note: global_position is on a global coord sys, but pivot_offset is on a local coord sys. Thus, you must rotate the pivot_offset to match the global coord sys
-		pivot_point = global_position + pivot_offset.rotated(rotation)
-		info["pivot_point"] = pivot_point
+			info["position"] = global_position
+			pivot_offset = size / 2
+			#Note: global_position is on a global coord sys, but pivot_offset is on a local coord sys. Thus, you must rotate the pivot_offset to match the global coord sys
+			pivot_point = global_position + pivot_offset.rotated(rotation)
+			info["pivot_point"] = pivot_point
 
 func create(type: String, image_path: String, index: int, size: Vector2, position: Vector2):
 	var txt_file_path = "res://assets/" + str(type) + "s/descriptions/" + str(type) + "_descriptions.txt"
@@ -136,6 +148,8 @@ func create(type: String, image_path: String, index: int, size: Vector2, positio
 	pivot_offset = size / 2
 	pivot_point = info["position"] + pivot_offset
 	info["pivot_point"] = pivot_point
+	
+	print("name: " + name)
 	
 	radial_menu = RadialMenu.new()
 	radial_menu.name = "RadialMenu"
@@ -215,7 +229,7 @@ func _on_gui_input(event: InputEvent):
 					
 					hide_radial_menu()
 					hide_resize_menu()
-			
+	
 	# mouse drags
 	elif event is InputEventMouseMotion and asset_selected:
 		#print("dragging")
@@ -230,7 +244,7 @@ func _on_gui_input(event: InputEvent):
 					menu.get_parent().hide_resize_menu() # any DeployedAsset with radial menu visible will have resize menu visible too
 					# set radial_menu_showing to false for the DeployedAsset with this menu as its child
 					menu.get_parent().radial_menu_showing = false
-			
+		
 		radial_menu_showing = false
 		DeployedAsset.any_menu_showing = true
 		
@@ -244,7 +258,7 @@ func show_radial_menu() -> void:
 	$RadialMenu.size = self.size
 	# center the pivot point, then move it left to account for button size (ratio button size : self size)
 	$RadialMenu.anchor_left = 0.5 - $RadialMenu/RotateButton.get_size().x / 2 / self.size.x
-	$RadialMenu.anchor_top = $RadialMenu/RotateButton.get_size().x / self.size.x
+	$RadialMenu.anchor_top = 0.5 - $RadialMenu/RotateButton.get_size().y / 2 / self.size.y
 	$RadialMenu.show()
 	
 	var tween = get_tree().create_tween().set_parallel(true) # allow multiple tweens to run at once
@@ -253,12 +267,13 @@ func show_radial_menu() -> void:
 	var angle = deg_to_rad(230)
 	for button in $RadialMenu.get_children():
 		if not button.name.contains("Description"):
-			tween.tween_property(button, "position", Vector2(RadialMenu.radius, 0).rotated(angle), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			# position math: first it rotates the assets around the radius, then centers the assets along the inner y-axis before adding an offset in relation to self's height #  - Vector2(0.0, size.y / 2 + $RadialMenu/DescriptionButton.size.y / 2 + 4 + 10)
+			# global_position here gets the position of the button before the tween runs, which is at the pivot point. So the pivot point is moved to the top of the image
+			tween.tween_property(button, "position", Vector2(RadialMenu.radius, 0).rotated(angle) - Vector2(0.0, $RadialMenu/RotateButton.global_position.rotated(-rotation).y - global_position.rotated(-rotation).y), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tween.tween_property(button, "scale", Vector2.ONE, RadialMenu.speed).from(Vector2(0.5, 0.5)).set_trans(Tween.TRANS_LINEAR)
 			angle += deg_to_rad(40)
 		else:
-			angle += deg_to_rad(30)
-			tween.tween_property(button, "position", Vector2(RadialMenu.radius + 30, 0).rotated(angle), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tween.tween_property(button, "position", Vector2(size.x / 2 + $RadialMenu/DescriptionButton.size.x / 2 + 4 + 10, 0.0), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tween.tween_property(button, "scale", Vector2.ONE, RadialMenu.speed).from(Vector2(0.5, 0.5)).set_trans(Tween.TRANS_LINEAR)
 
 func hide_radial_menu() -> void:
@@ -270,7 +285,7 @@ func hide_radial_menu() -> void:
 		if not menu_tween_active:
 			$RadialMenu.hide()
 			$ResizeMenu.hide()
-	) # lambda, similar to arrow functions in JS
+	) # note to self: function is called a lambda, similar to arrow functions in JS
 	
 	for button in $RadialMenu.get_children():
 		tween.tween_property(button, "position", Vector2.ZERO, RadialMenu.speed).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)

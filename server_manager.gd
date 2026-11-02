@@ -65,9 +65,23 @@ func create_deployed_asset(type: String, string_path: String, index: int, size: 
 	var canvas = get_tree().root.find_child("Canvas", true, false)
 	canvas.add_child(deployable)
 	
-	assets.append(deployable)
+	# name the asset (image_name)(number of existing "image_names" there already are).
+	var deployable_name = deployable.texture.resource_path.get_basename().get_file() # get name of the texture file without the file extension
+		
+	var counter = 0
+	for asset in assets:
+		if asset.name.contains(deployable_name):
+			counter += 1
 	
-	#object_created(deployable)
+	if counter == 0:
+		deployable.name = deployable_name
+	else:
+		deployable.name = deployable_name + " " + str(counter)
+		
+	print(deployable.name)
+	
+	assets.append(deployable)
+	asset_created(deployable)
 
 func glass_selected() -> void:
 	var data = {

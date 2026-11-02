@@ -88,13 +88,11 @@ func on_resize_button_tl_clicked(event: InputEvent) -> void:
 		if event.pressed:
 			print("resize button tl clicked")
 			resizing = "tl"
-			resize_difference = Vector2.ZERO
-			original_corner_position = get_viewport().get_mouse_position()
-			parent_original_size = get_parent().info["size"]
-			parent_original_position = get_parent().global_position
+			set_up_resize_variables()
 			
 		elif event.is_released():
 			resizing = "null"
+			take_down_resize_variables()
 	
 func on_resize_button_tr_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -102,33 +100,47 @@ func on_resize_button_tr_clicked(event: InputEvent) -> void:
 			print("resize button tr clicked")
 			resizing = "tr"
 			resize_difference = Vector2.ZERO
-			original_corner_position = get_viewport().get_mouse_position()
-			parent_original_size = get_parent().info["size"]
-			parent_original_position = get_parent().global_position
+			set_up_resize_variables()
 			
 		elif event.is_released():
 			resizing = "null"
+			take_down_resize_variables()
 	
 func on_resize_button_bl_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			print("resize button bl clicked")
 			resizing = "bl"
-			resize_difference = Vector2.ZERO
-			original_corner_position = get_viewport().get_mouse_position()
-			parent_original_size = get_parent().info["size"]
-			parent_original_position = get_parent().global_position
+			set_up_resize_variables()
 		elif event.is_released():
 			resizing = "null"
+			take_down_resize_variables()
 	
 func on_resize_button_br_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			print("resize button br clicked")
 			resizing = "br"
-			resize_difference = Vector2.ZERO
-			original_corner_position = get_viewport().get_mouse_position()
-			parent_original_size = get_parent().info["size"]
-			parent_original_position = get_parent().global_position
+			set_up_resize_variables()
 		elif event.is_released():
 			resizing = "null"
+			take_down_resize_variables()
+
+var rotate_button_original_position
+var reorder_layer_button_original_position
+var delete_button_original_position
+var description_button_original_position
+
+func set_up_resize_variables() -> void:
+	resize_difference = Vector2.ZERO
+	original_corner_position = get_viewport().get_mouse_position()
+	parent_original_size = get_parent().info["size"]
+	parent_original_position = get_parent().global_position
+	
+	rotate_button_original_position = get_parent().get_node("RadialMenu/RotateButton").position
+	reorder_layer_button_original_position = get_parent().get_node("RadialMenu/ReorderLayerButton").position
+	delete_button_original_position = get_parent().get_node("RadialMenu/DeleteButton").position
+	description_button_original_position = get_parent().get_node("RadialMenu/DescriptionButton").position
+
+func take_down_resize_variables() -> void:
+	pass

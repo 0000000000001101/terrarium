@@ -32,12 +32,12 @@ func _ready() -> void:
 # called every xx interval
 func _physics_process(delta: float) -> void:
 	if asset_being_dragged != null:
-		var deployed_assets = get_tree().get_nodes_in_group("deployed_assets")
+		var draggables = get_tree().get_nodes_in_group("draggables")
 		
 		var tween = get_tree().create_tween()
 		
 		if asset_being_dragged != null:
-			tween.tween_property(deployed_assets[0], "position", Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y), delay * delta)
+			tween.tween_property(draggables[0], "position", Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y), delay * delta)
 			
 # called whenever select gui elements are interacted with. called from inventory.gd
 func _on_gui_input(event: InputEvent, name: String, size: Vector2) -> void:
@@ -49,16 +49,16 @@ func _on_gui_input(event: InputEvent, name: String, size: Vector2) -> void:
 			if name.contains("animal"):
 				create_drag_image("animal", animal_assets, name, size)
 				
-				var deployed_assets = get_tree().get_nodes_in_group("deployed_assets")
-				difference_x = get_viewport().get_mouse_position().x - deployed_assets[0].position.x
-				difference_y = get_viewport().get_mouse_position().y - deployed_assets[0].position.y
+				var draggables = get_tree().get_nodes_in_group("draggables")
+				difference_x = get_viewport().get_mouse_position().x - draggables[0].position.x
+				difference_y = get_viewport().get_mouse_position().y - draggables[0].position.y
 			
 			elif name.contains("plant"):
 				create_drag_image("plant", plant_assets, name, size)
 				
-				var deployed_assets = get_tree().get_nodes_in_group("deployed_assets")
-				difference_x = get_viewport().get_mouse_position().x - deployed_assets[0].position.x
-				difference_y = get_viewport().get_mouse_position().y - deployed_assets[0].position.y
+				var draggables = get_tree().get_nodes_in_group("draggables")
+				difference_x = get_viewport().get_mouse_position().x - draggables[0].position.x
+				difference_y = get_viewport().get_mouse_position().y - draggables[0].position.y
 				
 			count += 1
 				
@@ -66,18 +66,18 @@ func _on_gui_input(event: InputEvent, name: String, size: Vector2) -> void:
 			asset_selected = false
 			asset_being_dragged = null
 			
-			var deployed_assets = get_tree().get_nodes_in_group("deployed_assets")
+			var draggables = get_tree().get_nodes_in_group("draggables")
 			
-			# call server to add a deployed_asset to its list of deployed_assets
 			if name.contains("animal"):
-				ServerManager.create_deployed_asset("animal", image_path, index, size, deployed_assets[0].position)
+				ServerManager.create_deployed_asset("animal", image_path, index, draggables[0].size, draggables[0].position)
 				# take "Draggables" node off screen
-				get_tree().call_group("deployed_assets", "queue_free")
+				# There is only ever the one current draggable in group "draggables". There's probbaly a way this can be refactored to make it more straightforward.
+				get_tree().call_group("draggables", "queue_free")
 				
 			elif name.contains("plant"):
-				ServerManager.create_deployed_asset("plant", image_path, index, size, deployed_assets[0].position)
+				ServerManager.create_deployed_asset("plant", image_path, index, draggables[0].size, draggables[0].position)
 				# take "Draggables" node off screen
-				get_tree().call_group("deployed_assets", "queue_free")
+				get_tree().call_group("draggables", "queue_free")
 		
 	# mouse drags
 	elif event is InputEventMouseMotion and asset_selected:
@@ -97,14 +97,17 @@ func create_drag_image(type:String, assets:Array, name, size: Vector2) -> void:
 	
 	var image_copy = TextureRect.new()
 	
+	# position the image_copy on top of the Inventory
+	image_copy.z_index = 1000
+	
 	if type == "animal":
 		image_copy.texture = load(image_path)
 	elif type == "plant":
 		image_copy.texture = load(image_path)
 	image_copy.expand_mode = image_copy.EXPAND_IGNORE_SIZE
 	
-	image_copy.custom_minimum_size = assets[index].custom_minimum_size
-	image_copy.size.x = 100
+	image_copy.custom_minimum_size = Vector2(image_copy.texture.get_size().x * (get_parent().size.y / image_copy.texture.get_size().y), get_parent().size.y)
+	image_copy.size = Vector2(image_copy.texture.get_size().x * (get_parent().size.y / image_copy.texture.get_size().y), get_parent().size.y)
 	
 	var inventory_assets = get_tree().get_nodes_in_group(type + "_assets")
 	image_copy.position.x = inventory_assets[index].global_position.x
@@ -112,4 +115,4 @@ func create_drag_image(type:String, assets:Array, name, size: Vector2) -> void:
 	
 	canvas.add_child(image_copy)
 	
-	image_copy.add_to_group("deployed_assets")
+	image_copy.add_to_group("draggables")

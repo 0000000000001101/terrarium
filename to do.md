@@ -1,12 +1,8 @@
-Priority:
+MVP:
 
 
 
-* Fix the sizing issue. When the assets are dragged on screen, they are squashed around. Set the sizes in relation to the aspect ratios of the original images, not the split-size set in the inventory to split the vbox width among two asset images.
-
-
-
-* The inventory also has some resizing issues. When you go to and from full-screen, it bugs out a bit. The plant assets also have a weird bug where they wont resize to the full width of the scroll container when making the screen smaller than the default (while the animals' do).
+* The inventory also has some resizing issues. When you go to and from full-screen, it bugs out a bit. The plant assets also have a weird bug where they wont resize to the full width of the scroll container when making the screen smaller than the default (while the animals' do). This is not the biggest issue, though.
 
 
 
@@ -34,10 +30,6 @@ Priority:
 
 
 
-* (It may be fixed?) There is a weird bug when it comes to hiding/showing the radial menu when images are spam moved/clicked on in quick succession where every subsequent click will hide/show the menu such that it cannot be hidden again unless it is moved or another asset is clicked. This does not seem to be a huge hinderance, however.
-
-
-
 * Have the draggable from the inventory be displayed above the inventory. (Layer or z layer property?)
 
 
@@ -46,10 +38,7 @@ Priority:
 
 
 
-* Allow the assets to be resized on the canvas
-
-  * Change the pivot point to be centered again, account for 1/2 change in height
-  * Change the size of the resize menu when the asset is resized
+* Change the size of the resize menu when the asset is resized
 * Allow the layering of the assets be changed around.
 
   * Add asset names so that 
@@ -59,7 +48,12 @@ Priority:
 
 
 
-* Might need to pass pivot\_point and scale to the server too
+* Allow the inventory to be hidden and re-shown. Spawn a button whose center is halfway down the inventory on the right side of the inventory whose texture arrow direction changes depending on the visibility status of the inventory.
+
+
+
+* Fix the bug that happens where the menus hide weirdly or get repositioned when i drag the asset quickly and the menus quickly hide and reshow.
+* The radial menu also does not follow the image to a T when it's resized.
 
 
 

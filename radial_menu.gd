@@ -19,9 +19,6 @@ func _ready() -> void:
 	delete_button.name = "DeleteButton"
 	delete_button.icon = load("res://assets/smiley placeholder.png")
 	delete_button.flat = true # rid of the border
-	#description_button.anchor_top = 0.0 # Don't need. The tween overrides positioning
-	#description_button.anchor_left = 0.5
-	#description_button.anchor_right = 0.5
 	delete_button.gui_input.connect(on_delete_button_clicked)
 	self.add_child(delete_button)
 	
@@ -29,9 +26,6 @@ func _ready() -> void:
 	rotate_button.name = "RotateButton"
 	rotate_button.icon = load("res://assets/smiley placeholder.png")
 	rotate_button.flat = true
-	#rotate_button.anchor_top = 0.0 # Don't need. The tween overrides positioning
-	#rotate_button.anchor_left = 0.5
-	#rotate_button.anchor_right = 0.5
 	rotate_button.gui_input.connect(on_rotate_button_clicked)
 	self.add_child(rotate_button)
 	
@@ -39,9 +33,6 @@ func _ready() -> void:
 	reorder_layer_button.name = "ReorderLayerButton"
 	reorder_layer_button.icon = load("res://assets/smiley placeholder.png")
 	reorder_layer_button.flat = true
-	#reorder_layer_button.anchor_top = 0.0 # Don't need. The tween overrides positioning
-	#reorder_layer_button.anchor_left = 0.5
-	#reorder_layer_button.anchor_right = 0.5
 	reorder_layer_button.gui_input.connect(on_reorder_layer_button_clicked)
 	self.add_child(reorder_layer_button)
 	
@@ -49,9 +40,6 @@ func _ready() -> void:
 	description_button.name = "DescriptionButton"
 	description_button.icon = load("res://assets/smiley placeholder.png")
 	description_button.flat = true # rid of the border
-	#description_button.anchor_top = 0.0 # Don't need. The tween overrides positioning
-	#description_button.anchor_left = 0.5
-	#description_button.anchor_right = 0.5
 	description_button.gui_input.connect(on_description_button_clicked)
 	self.add_child(description_button)
 
