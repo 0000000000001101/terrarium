@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://di4cpdg5p45x7"]
 
 [ext_resource type="Texture2D" uid="uid://duvq8pdxibtgm" path="res://assets/canvas texture 2.jpg" id="1_75aqd"]
-[ext_resource type="Theme" uid="uid://dwpyx7y0g76n3" path="res://themes/main_theme.tres" id="1_uoc13"]
+[ext_resource type="Theme" uid="uid://cvjwhpryd4k74" path="res://themes/dark-electric-pink.tres" id="1_b5t36"]
 [ext_resource type="Script" uid="uid://cfdg7jpt640fy" path="res://radial_menu.gd" id="2_rjejc"]
 [ext_resource type="Script" uid="uid://du5ki3ia605oh" path="res://background.gd" id="3_b5t36"]
 [ext_resource type="Script" uid="uid://boq4lpht8ge2p" path="res://resize_menu.gd" id="4_d11g6"]
 [ext_resource type="Texture2D" uid="uid://bat10t80bfcty" path="res://assets/smiley placeholder.png" id="4_rjejc"]
 [ext_resource type="Texture2D" uid="uid://34yp6n7a6tox" path="res://icon.svg" id="4_uoc13"]
 [ext_resource type="Script" uid="uid://bvtx6w1h45ye" path="res://inventory.gd" id="7_b5t36"]
+[ext_resource type="Script" uid="uid://04h3ibcy5437" path="res://theme_menu.gd" id="9_rletj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
 
@@ -20,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_uoc13")
+theme = ExtResource("1_b5t36")
 metadata/_edit_use_anchors_ = true
 
 [node name="Canvas" type="Control" parent="." unique_id=1168955981]
@@ -224,3 +225,40 @@ layout_mode = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
 offset_transform_enabled = true
+
+[node name="MenuButton" type="MenuButton" parent="Inventory" unique_id=1975928723]
+z_index = 100
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -22.0
+offset_top = 1.0
+offset_right = 4.0
+offset_bottom = 24.0
+grow_horizontal = 0
+focus_mode = 0
+text = "≡"
+flat = false
+item_count = 10
+popup/item_0/text = "Main Theme"
+popup/item_0/id = 0
+popup/item_1/text = "Catppuccin Mocha"
+popup/item_1/id = 1
+popup/item_2/text = "Catppuccin Macchiato"
+popup/item_2/id = 2
+popup/item_3/text = "Catppuccin Frappé"
+popup/item_3/id = 3
+popup/item_4/text = "Catppuccin Latte"
+popup/item_4/id = 4
+popup/item_5/text = "Dark Electric Pink"
+popup/item_5/id = 5
+popup/item_6/text = "Fox Friend"
+popup/item_6/id = 6
+popup/item_7/text = "Wolf Kami"
+popup/item_7/id = 7
+popup/item_8/text = "Rice Pudding"
+popup/item_8/id = 8
+popup/item_9/text = "Inu"
+popup/item_9/id = 9
+script = ExtResource("9_rletj")
