@@ -29,6 +29,7 @@ func _ready() -> void:
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
 	inventory.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
 	tab_container.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
+	$MenuButton.position.x = tab_container.size.x - $MenuButton.size.x
 
 	animal_images = create_image_array("res://assets/animals")
 	plant_images = create_image_array("res://assets/plants")
@@ -44,6 +45,7 @@ func _ready() -> void:
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
 	inventory.position = Vector2(0, 0)
 	tab_container.global_position = Vector2(0, 0)
+	$MenuButton.position.x = tab_container.size.x - $MenuButton.size.x
 	
 	#print_sizing_details()
 
@@ -90,6 +92,7 @@ func _on_window_resized() -> void:
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
 	inventory.position = Vector2(0, 0)
 	tab_container.global_position = Vector2(0, 0)
+	$MenuButton.position.x = tab_container.size.x - $MenuButton.size.x
 	
 	tab_container.size.y = inventory.size.y
 	tab_container.size.x = inventory.size.x
