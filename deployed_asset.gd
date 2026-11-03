@@ -127,18 +127,13 @@ func _physics_process(delta: float) -> void:
 			pivot_point = global_position + pivot_offset.rotated(rotation)
 			info["pivot_point"] = pivot_point
 
-func create(type: String, image_path: String, index: int, size: Vector2, position: Vector2):
+func create(type: String, image_path: String, description: String, size: Vector2, position: Vector2, uuid: String = generate_uuid()):
 	var txt_file_path = "res://assets/" + str(type) + "s/descriptions/" + str(type) + "_descriptions.txt"
 	var file = FileAccess.open(txt_file_path, FileAccess.READ)
-	var description
 	
-	info["uuid"] = generate_uuid()
+	info["uuid"] = uuid
 	info["type"] = type
 	info["image_path"] = image_path
-	
-	for i in range(index + 1):
-		description = file.get_line()
-	
 	info["details"] = description
 	custom_minimum_size = size
 	info["size"] = size
@@ -165,8 +160,6 @@ func create(type: String, image_path: String, index: int, size: Vector2, positio
 	resize_menu.hide()
 	resize_menu.size = size
 	add_child(resize_menu)
-	
-	ServerManager.asset_created(self)
 
 # UUID follows an 8-4-4-4-12 hex-and dash format
 func generate_uuid() -> String:

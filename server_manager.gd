@@ -2,31 +2,38 @@ extends TextureRect
 
 var assets:Array[DeployedAsset]
 
-@export var websocket_url = "ws://127.0.0.1:8013"
 var socket = WebSocketPeer.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var err = socket.connect_to_url(websocket_url)
-	# Initiate connection to the given URL
-	if err == OK:
-		print("Connecting to %s..." % websocket_url)
-		# Wait for the socket to connect
-		await get_tree().create_timer(2).timeout
-		
-		# Send data
-		print("> Sending test packet.")
-		socket.send_text("test")
-	else:
-		push_error("Unable to connect.")
-		set_process(false)
+	# NOTE: Do not process until we are ready!
+	set_process(false)
+
+# NOTE: To be called when a "connect to server" button has been pressed.
+# Then check for true or false before changing scenes.
+# True if connected to the server, and false otherwise.
+func connect_to_server(websocket_url: String) -> bool:
+	print("Connecting to \"%s\"." % websocket_url)
+	var error = socket.connect_to_url(websocket_url)
+	
+	socket.poll()
+	while socket.get_ready_state() == WebSocketPeer.STATE_CONNECTING:
+		socket.poll()
+	
+	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		print("Connection succeeded!")
+		set_process(true)
+		# FIXME: This should only be ran when we are in the terrarium scene!!
+		# Maybe it needs to be ran somewhere else?
+		socket.send_text("{\"message_type\": \"request_state\"}")
+		return true
+	
+	print("Couldn't connect to server!")
+	return false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float):
-	# Data transfer and state updates will only happen when calling this function.
 	socket.poll()
-	
-	# get_ready_state tells you what state the socket is in.
 	var state = socket.get_ready_state()
 	
 	# `WebSocketPeer.STATE_OPEN` means the socket is connected and ready to send and receive data.
@@ -36,12 +43,12 @@ func _process(delta: float):
 			if socket.was_string_packet():
 				var packet_text = packet.get_string_from_utf8()
 				print("< Got text data from server: %s" % packet_text)
-				#json_msg = JSON(packet_text)
-				#if json_msg["MessageType"] == "object created by server key":
-					#ServerOnObjectCreate(json_msg)
+				handle_server_message(packet_text)
 			else:
 				print("< Got binary data from server: %d bytes" % packet.size())
-				
+				# TODO: Accept binary payloads.
+				push_error("Can not handle binary data from server!")
+	
 	# `WebsSocketPeer.STATE_CLOSED` means the connection has fully closed.
 	# It is now safe to stop polling.
 	elif state == WebSocketPeer.STATE_CLOSED:
@@ -50,12 +57,42 @@ func _process(delta: float):
 		print("WebSocket closed with code: %d. Clean %s" % [code, code != -1])
 		set_process(false) # Stop processing.
 
-func create_deployed_asset(type: String, string_path: String, index: int, size: Vector2, position: Vector2):
+func handle_server_message(json_payload: String) -> void:
+	var json = JSON.parse_string(json_payload)
+	if json == null:
+		push_error("Can not parse message from server!!")
+		return
+	
+	if json["message_type"] == "asset_created":
+		create_deployed_asset(json["type"], json["image_path"], json["description"], Vector2(json["size"]["x"], json["size"]["y"]), Vector2(json["position"]["x"], json["position"]["y"]), true, json["uuid"])
+		#push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+	elif json["message_type"] == "asset_deleted":
+		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+	elif json["message_type"] == "asset_layer_reordered":
+		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+	elif json["message_type"] == "asset_moved":
+		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+	elif json["message_type"] == "asset_resized":
+		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+	elif json["message_type"] == "asset_rotated":
+		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+	elif json["message_type"] == "request_state":
+		push_error("What? Clients shouldn't be asked for state!! Report this error.")
+	elif json["message_type"] == "meow":
+		socket.send_text("meow :3")
+	else:
+		push_error("Don't know how to handle \"%s\" message type!" % json["message_type"])
+
+func create_deployed_asset(type: String, image_path: String, description: String, size: Vector2, position: Vector2, server_command: bool = false, uuid: String = "NULL"):
 	var deployable = DeployedAsset.new()
 	
-	deployable.texture = load(string_path)
+	deployable.texture = load(image_path)
 	
-	deployable.create(type, string_path, index, size, position)
+	if uuid != "NULL":
+		deployable.create(type, image_path, description, size, position, uuid)
+	else:
+		deployable.create(type, image_path, description, size, position)
+		
 	deployable.gui_input.connect(deployable._on_gui_input)
 	
 	deployable.expand_mode = deployable.EXPAND_IGNORE_SIZE
@@ -68,20 +105,14 @@ func create_deployed_asset(type: String, string_path: String, index: int, size: 
 	# name the asset (image_name)(number of existing "image_names" there already are).
 	var deployable_name = deployable.texture.resource_path.get_basename().get_file() # get name of the texture file without the file extension
 		
-	var counter = 0
-	for asset in assets:
-		if asset.name.contains(deployable_name):
-			counter += 1
-	
-	if counter == 0:
-		deployable.name = deployable_name
-	else:
-		deployable.name = deployable_name + " " + str(counter)
+	deployable.name = deployable_name + "_" + deployable.info["uuid"]
 		
 	print(deployable.name)
 	
 	assets.append(deployable)
-	asset_created(deployable)
+	
+	if not server_command:
+		asset_created(deployable)
 
 func glass_selected() -> void:
 	var data = {
@@ -95,7 +126,7 @@ func asset_created(deployable: DeployedAsset) -> void:
 	var data = {
 		"message_type": "asset_created",
 		"uuid": deployable.info["uuid"],
-		"type": deployable.info["uuid"],
+		"type": deployable.info["type"],
 		"image_path": deployable.info["image_path"],
 		"description": deployable.info["description"],
 		"position": {
@@ -167,12 +198,3 @@ func asset_rotated(deployable: DeployedAsset) -> void:
 		"rotation": deployable.info["rotation"]
 	}
 	socket.send_text(JSON.stringify(data))
-
-# server tells client an asset was made
-func server_asset_created(jsonmsg: String):
-	pass
-	# {
-	# 
-	#
-	# }
-	#deployable.info["uuid"] = json["UUID"]

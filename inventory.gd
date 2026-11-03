@@ -21,6 +21,9 @@ static var plant_images = []
 func _ready() -> void:
 	print("inventory script running")
 	
+	# FIXME: This is temporary, until we have a connect to server scene.
+	ServerManager.connect_to_server("ws://127.0.0.1:8013")
+	
 	# Set anchor settings to default
 	#set_anchors_preset(Control.PRESET_FULL_RECT)
 	#set_offsets_preset(Control.PRESET_FULL_RECT)

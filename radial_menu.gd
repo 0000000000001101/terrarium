@@ -53,7 +53,6 @@ func on_delete_button_clicked(event: InputEvent) -> void:
 			print("delete layer button clicked")
 			ServerManager.asset_deleted(get_parent())
 			self.get_parent().free()
-			# Update server
 
 func on_reorder_layer_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
