@@ -86,3 +86,9 @@ When rotating existing deployed asset:
     "uuid": String,
     "rotation": int
 }
+
+When requesting the current terrarium state/scene:
+
+{
+    "message_type": "request_state"
+}
