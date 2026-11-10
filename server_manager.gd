@@ -1,6 +1,6 @@
 extends TextureRect
 
-var assets:Array[DeployedAsset]
+var assets:Dictionary[String, DeployedAsset]
 
 var socket = WebSocketPeer.new()
 
@@ -65,13 +65,12 @@ func handle_server_message(json_payload: String) -> void:
 	
 	if json["message_type"] == "asset_created":
 		create_deployed_asset(json["type"], json["image_path"], json["description"], Vector2(json["size"]["x"], json["size"]["y"]), Vector2(json["position"]["x"], json["position"]["y"]), true, json["uuid"])
-		#push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
 	elif json["message_type"] == "asset_deleted":
-		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+		delete_deployed_asset(json["uuid"])
 	elif json["message_type"] == "asset_layer_reordered":
 		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
 	elif json["message_type"] == "asset_moved":
-		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+		move_deployed_asset(json["uuid"], Vector2(json["position"]["x"], json["position"]["y"]), Vector2(json["pivot_point"]["x"], json["pivot_point"]["y"]))
 	elif json["message_type"] == "asset_resized":
 		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
 	elif json["message_type"] == "asset_rotated":
@@ -109,10 +108,20 @@ func create_deployed_asset(type: String, image_path: String, description: String
 		
 	print(deployable.name)
 	
-	assets.append(deployable)
+	assets[deployable.info["uuid"]] = deployable
 	
 	if not server_command:
 		asset_created(deployable)
+
+func delete_deployed_asset(uuid: String) -> void:
+	var target = assets.get(uuid) as DeployedAsset
+	target.queue_free()
+	assets.erase(uuid)
+
+func move_deployed_asset(uuid: String, position: Vector2, pivot_point: Vector2) -> void:
+	var target = assets.get(uuid) as DeployedAsset
+	target.position = position
+	target.pivot_point = pivot_point
 
 func glass_selected() -> void:
 	var data = {

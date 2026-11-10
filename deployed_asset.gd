@@ -50,12 +50,13 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	
+
 func _physics_process(delta: float) -> void:
 	if asset_dragging:
 		var tween = get_tree().create_tween()
 		tween.tween_property(self, "position", Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y), delay * delta)
 		info["position"] = Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y)
+		ServerManager.asset_moved(self)
 
 	elif $RadialMenu.rotating:
 		# long delays cause for a glitch at the 180 mark where the image full 360 rotates
