@@ -69,13 +69,13 @@ func _on_gui_input(event: InputEvent, name: String, size: Vector2) -> void:
 			var draggables = get_tree().get_nodes_in_group("draggables")
 			
 			if name.contains("animal"):
-				ServerManager.create_deployed_asset("animal", image_path, index, draggables[0].size, draggables[0].position)
+				ServerManager.create_deployed_asset("animal", image_path, "WhereDoIGetDescriptionsFrom?", draggables[0].size, draggables[0].position)
 				# take "Draggables" node off screen
 				# There is only ever the one current draggable in group "draggables". There's probbaly a way this can be refactored to make it more straightforward.
 				get_tree().call_group("draggables", "queue_free")
 				
 			elif name.contains("plant"):
-				ServerManager.create_deployed_asset("plant", image_path, index, draggables[0].size, draggables[0].position)
+				ServerManager.create_deployed_asset("plant", image_path, "WhereDoIGetDescriptionsFrom?", draggables[0].size, draggables[0].position)
 				# take "Draggables" node off screen
 				get_tree().call_group("draggables", "queue_free")
 		

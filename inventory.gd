@@ -3,8 +3,29 @@
 class_name Inventory
 extends Control
 
-static var animal_images = []
-static var plant_images = []
+const animal_images: Array[String] = [
+	"res://assets/animals/alabama beach mouse.jpg",
+	"res://assets/animals/angry hedgehog.png",
+	"res://assets/animals/dunkleosteus.jpg",
+	"res://assets/animals/rabbit - Copy.jpg",
+	"res://assets/animals/rabbit.jpg",
+	"res://assets/animals/raccoon - Copy.jpg",
+	"res://assets/animals/raccoon.jpg",
+	"res://assets/animals/short eared elephant shrew.jpg",
+	"res://assets/animals/storm the bat - Copy.jpg",
+	"res://assets/animals/storm the bat.jpg"
+]
+const plant_images: Array[String] = [
+	"res://assets/plants/baseball plant.jpg",
+	"res://assets/plants/belladonna lily.jpg",
+	"res://assets/plants/belladonna.jpg",
+	"res://assets/plants/bulb plant.webp",
+	"res://assets/plants/deep dark purple orchid.jpg",
+	"res://assets/plants/halloween flower.webp",
+	"res://assets/plants/poison hemlock.jpg",
+	"res://assets/plants/porcupine tomato.jpg",
+	"res://assets/plants/queen of the night.jpg"
+]
 
 # get tree elements once they load into the tree
 @onready var inventory = self
@@ -21,6 +42,9 @@ static var plant_images = []
 func _ready() -> void:
 	print("inventory script running")
 	
+	# FIXME: This is temporary, until we have a connect to server scene.
+	ServerManager.connect_to_server("ws://127.0.0.1:8013")
+	
 	# Set anchor settings to default
 	#set_anchors_preset(Control.PRESET_FULL_RECT)
 	#set_offsets_preset(Control.PRESET_FULL_RECT)
@@ -29,9 +53,6 @@ func _ready() -> void:
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
 	inventory.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
 	tab_container.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
-
-	animal_images = create_image_array("res://assets/animals")
-	plant_images = create_image_array("res://assets/plants")
 
 	load_images(animal_images, "animal")
 	load_images(plant_images, "plant")
@@ -54,6 +75,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+# OLD:
 func create_image_array(path: String) -> Variant:
 	var dir = DirAccess.open(path)
 	var array: Array[String] = []
@@ -84,7 +106,7 @@ func create_name_array(image_array: Array[String]) -> Variant:
 	
 func _on_window_resized() -> void:
 	var animal_assets = get_tree().get_nodes_in_group("animal_assets")
-	var plant_assets = get_tree().get_nodes_in_group("animal_assets")
+	var plant_assets = get_tree().get_nodes_in_group("plant_assets")
 	
 	inventory.size.y = get_viewport_rect().size.y
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.

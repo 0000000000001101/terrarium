@@ -50,27 +50,27 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	
+
 func _physics_process(delta: float) -> void:
 	if asset_dragging:
 		var tween = get_tree().create_tween()
 		tween.tween_property(self, "position", Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y), delay * delta)
 		info["position"] = Vector2(get_viewport().get_mouse_position().x - difference_x, get_viewport().get_mouse_position().y - difference_y)
+		ServerManager.asset_moved(self)
 
-	elif $RadialMenu.rotating:
+	if $RadialMenu.rotating:
 		# long delays cause for a glitch at the 180 mark where the image full 360 rotates
 		rotation = lerp_angle(rotation, $RadialMenu.theta, 10.0 * delta)
+		info["rotation"] = rotation
 		
-	elif not $ResizeMenu.resizing == "null":
+	if not $ResizeMenu.resizing == "null":
 		local_diff = $ResizeMenu.resize_difference.rotated(-rotation)
-				
+		
+		var new_size = size
+		
 		match $ResizeMenu.resizing:
 			"tl":
-				var new_size = $ResizeMenu.parent_original_size - local_diff
-				size = new_size
-				custom_minimum_size = new_size
-				info["size"] = new_size
-				$ResizeMenu.size = new_size
+				new_size = $ResizeMenu.parent_original_size - local_diff
 		
 				var fixed_bottom_right = $ResizeMenu.parent_original_position + $ResizeMenu.parent_original_size.rotated(rotation)
 				
@@ -79,35 +79,38 @@ func _physics_process(delta: float) -> void:
 				#print("size: " + str(size) + ", global_position: " + str(global_position) + ", resize_difference: " + str($ResizeMenu.resize_difference))
 			
 			"tr":
-				var new_size = $ResizeMenu.parent_original_size + Vector2(local_diff.x, - local_diff.y)
-				size = new_size
-				custom_minimum_size = new_size
-				info["size"] = new_size
-				$ResizeMenu.size = new_size
+				new_size = $ResizeMenu.parent_original_size + Vector2(local_diff.x, - local_diff.y)
 				
 				var fixed_bottom_left = $ResizeMenu.parent_original_position + Vector2(0.0, $ResizeMenu.parent_original_size.y).rotated(rotation)
 				
 				global_position = fixed_bottom_left - Vector2(0.0, new_size.y).rotated(rotation)
 			"bl":
-				var new_size = $ResizeMenu.parent_original_size + Vector2(- local_diff.x, local_diff.y)
-				size = new_size
-				custom_minimum_size = new_size
-				info["size"] = new_size
-				$ResizeMenu.size = new_size
+				new_size = $ResizeMenu.parent_original_size + Vector2(- local_diff.x, local_diff.y)
 				
 				var fixed_top_right = $ResizeMenu.parent_original_position + Vector2($ResizeMenu.parent_original_size.x, 0.0).rotated(rotation)
 				
 				global_position = fixed_top_right - Vector2(new_size.x, 0.0).rotated(rotation)
 			"br":
-				var new_size = $ResizeMenu.parent_original_size + local_diff
-				size = new_size
-				custom_minimum_size = new_size
-				info["size"] = new_size
-				$ResizeMenu.size = new_size
+				new_size = $ResizeMenu.parent_original_size + local_diff
 				
 				var fixed_top_left = $ResizeMenu.parent_original_position
 				
 				global_position = fixed_top_left
+				
+		size = new_size
+		custom_minimum_size = new_size
+		info["size"] = new_size
+		$ResizeMenu.size = new_size
+		
+		info["position"] = global_position
+		pivot_offset = size / 2
+		pivot_point = global_position + pivot_offset.rotated(rotation)
+		info["pivot_point"] = pivot_point
+		
+		$RadialMenu.size = size
+		$RadialMenu.anchor_left = 0.5 - $RadialMenu/RotateButton.get_size().x / 2 / size.x
+		$RadialMenu.anchor_top = 0.5 - $RadialMenu/RotateButton.get_size().y / 2 / size.y
+		ServerManager.asset_resized(self)
 		
 		var tween = get_tree().create_tween().set_parallel(true)
 		
@@ -127,18 +130,13 @@ func _physics_process(delta: float) -> void:
 			pivot_point = global_position + pivot_offset.rotated(rotation)
 			info["pivot_point"] = pivot_point
 
-func create(type: String, image_path: String, index: int, size: Vector2, position: Vector2):
+func create(type: String, image_path: String, description: String, size: Vector2, position: Vector2, uuid: String = generate_uuid()):
 	var txt_file_path = "res://assets/" + str(type) + "s/descriptions/" + str(type) + "_descriptions.txt"
 	var file = FileAccess.open(txt_file_path, FileAccess.READ)
-	var description
 	
-	info["uuid"] = generate_uuid()
+	info["uuid"] = uuid
 	info["type"] = type
 	info["image_path"] = image_path
-	
-	for i in range(index + 1):
-		description = file.get_line()
-	
 	info["details"] = description
 	custom_minimum_size = size
 	info["size"] = size
@@ -165,8 +163,6 @@ func create(type: String, image_path: String, index: int, size: Vector2, positio
 	resize_menu.hide()
 	resize_menu.size = size
 	add_child(resize_menu)
-	
-	ServerManager.asset_created(self)
 
 # UUID follows an 8-4-4-4-12 hex-and dash format
 func generate_uuid() -> String:
