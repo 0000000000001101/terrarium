@@ -3,8 +3,29 @@
 class_name Inventory
 extends Control
 
-static var animal_images = []
-static var plant_images = []
+const animal_images: Array[String] = [
+	"res://assets/animals/alabama beach mouse.jpg",
+	"res://assets/animals/angry hedgehog.png",
+	"res://assets/animals/dunkleosteus.jpg",
+	"res://assets/animals/rabbit - Copy.jpg",
+	"res://assets/animals/rabbit.jpg",
+	"res://assets/animals/raccoon - Copy.jpg",
+	"res://assets/animals/raccoon.jpg",
+	"res://assets/animals/short eared elephant shrew.jpg",
+	"res://assets/animals/storm the bat - Copy.jpg",
+	"res://assets/animals/storm the bat.jpg"
+]
+const plant_images: Array[String] = [
+	"res://assets/plants/baseball plant.jpg",
+	"res://assets/plants/belladonna lily.jpg",
+	"res://assets/plants/belladonna.jpg",
+	"res://assets/plants/bulb plant.webp",
+	"res://assets/plants/deep dark purple orchid.jpg",
+	"res://assets/plants/halloween flower.webp",
+	"res://assets/plants/poison hemlock.jpg",
+	"res://assets/plants/porcupine tomato.jpg",
+	"res://assets/plants/queen of the night.jpg"
+]
 
 # get tree elements once they load into the tree
 @onready var inventory = self
@@ -33,9 +54,6 @@ func _ready() -> void:
 	inventory.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
 	tab_container.custom_minimum_size.x = (get_viewport_rect().size.x * 0.25)
 
-	animal_images = create_image_array("res://assets/animals")
-	plant_images = create_image_array("res://assets/plants")
-
 	load_images(animal_images, "animal")
 	load_images(plant_images, "plant")
 	
@@ -57,6 +75,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+# OLD:
 func create_image_array(path: String) -> Variant:
 	var dir = DirAccess.open(path)
 	var array: Array[String] = []
