@@ -106,7 +106,7 @@ func create_name_array(image_array: Array[String]) -> Variant:
 	
 func _on_window_resized() -> void:
 	var animal_assets = get_tree().get_nodes_in_group("animal_assets")
-	var plant_assets = get_tree().get_nodes_in_group("animal_assets")
+	var plant_assets = get_tree().get_nodes_in_group("plant_assets")
 	
 	inventory.size.y = get_viewport_rect().size.y
 	inventory.size.x = (get_viewport_rect().size.x * 0.25) # hard coding 0.25 rather than anchor_right gave issues: might be 0.0 at runtime.
