@@ -72,7 +72,7 @@ func handle_server_message(json_payload: String) -> void:
 	elif json["message_type"] == "asset_moved":
 		move_deployed_asset(json["uuid"], Vector2(json["position"]["x"], json["position"]["y"]), Vector2(json["pivot_point"]["x"], json["pivot_point"]["y"]))
 	elif json["message_type"] == "asset_resized":
-		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+		resize_deployed_asset(json["uuid"], Vector2(json["position"]["x"], json["position"]["y"]), Vector2(json["size"]["x"], json["size"]["y"]), Vector2(json["pivot_point"]["x"], json["pivot_point"]["y"]))
 	elif json["message_type"] == "asset_rotated":
 		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
 	elif json["message_type"] == "request_state":
@@ -122,6 +122,17 @@ func move_deployed_asset(uuid: String, position: Vector2, pivot_point: Vector2) 
 	var target = assets.get(uuid) as DeployedAsset
 	target.position = position
 	target.pivot_point = pivot_point
+	
+func resize_deployed_asset(uuid: String, position: Vector2, size: Vector2, pivot_point: Vector2) -> void:
+	var target = assets.get(uuid) as DeployedAsset
+	target.position = position
+	target.size = size
+	target.custom_minimum_size = size
+	target.pivot_point = pivot_point
+	target.pivot_offset = size / 2
+	if target.has_node("ResizeMenu"):
+		target.get_node("ResizeMenu").size = size
+
 
 func glass_selected() -> void:
 	var data = {
@@ -189,6 +200,10 @@ func asset_resized(deployable: DeployedAsset) -> void:
 	var data = {
 		"message_type": "asset_resized",
 		"uuid": deployable.info["uuid"],
+		"position": {
+			"x": deployable.info["position"].x,
+			"y": deployable.info["position"].y
+		},
 		"size": {
 			"x": deployable.info["size"].x,
 			"y": deployable.info["size"].y
