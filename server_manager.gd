@@ -68,13 +68,13 @@ func handle_server_message(json_payload: String) -> void:
 	elif json["message_type"] == "asset_deleted":
 		delete_deployed_asset(json["uuid"])
 	elif json["message_type"] == "asset_layer_reordered":
-		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+		reorder_deployed_asset_layer(json["uuid"], json["layer"])
 	elif json["message_type"] == "asset_moved":
 		move_deployed_asset(json["uuid"], Vector2(json["position"]["x"], json["position"]["y"]), Vector2(json["pivot_point"]["x"], json["pivot_point"]["y"]))
 	elif json["message_type"] == "asset_resized":
 		resize_deployed_asset(json["uuid"], Vector2(json["position"]["x"], json["position"]["y"]), Vector2(json["size"]["x"], json["size"]["y"]), Vector2(json["pivot_point"]["x"], json["pivot_point"]["y"]))
 	elif json["message_type"] == "asset_rotated":
-		push_error("Don't know how to handle \"%s\" message type yet!" % json["message_type"])
+		rotate_deployed_asset(json["uuid"], json["rotation"])
 	elif json["message_type"] == "request_state":
 		push_error("What? Clients shouldn't be asked for state!! Report this error.")
 	elif json["message_type"] == "meow":
@@ -132,6 +132,18 @@ func resize_deployed_asset(uuid: String, position: Vector2, size: Vector2, pivot
 	target.pivot_offset = size / 2
 	if target.has_node("ResizeMenu"):
 		target.get_node("ResizeMenu").size = size
+
+func rotate_deployed_asset(uuid: String, new_rotation: float) -> void:
+	var target = assets.get(uuid) as DeployedAsset
+	if target:
+		target.rotation = new_rotation
+		target.info["rotation"] = new_rotation
+
+func reorder_deployed_asset_layer(uuid: String, new_layer: int) -> void:
+	var target = assets.get(uuid) as DeployedAsset
+	if target:
+		target.z_index = new_layer
+		target.info["layer"] = new_layer
 
 
 func glass_selected() -> void:

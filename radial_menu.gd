@@ -78,6 +78,8 @@ func on_rotate_button_clicked(event: InputEvent) -> void:
 			diff_y = get_parent().pivot_point.y - get_viewport().get_mouse_position().y
 			theta = - atan2(diff_x, diff_y)
 			#print(rad_to_deg(theta))
+			# NOTE: MAYBE REMOVE ME IF SPAMMY/LAGGY
+			ServerManager.asset_rotated(get_parent())
 	
 func on_description_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:

@@ -61,6 +61,7 @@ func _physics_process(delta: float) -> void:
 	if $RadialMenu.rotating:
 		# long delays cause for a glitch at the 180 mark where the image full 360 rotates
 		rotation = lerp_angle(rotation, $RadialMenu.theta, 10.0 * delta)
+		info["rotation"] = rotation
 		
 	if not $ResizeMenu.resizing == "null":
 		local_diff = $ResizeMenu.resize_difference.rotated(-rotation)
