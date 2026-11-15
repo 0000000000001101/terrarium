@@ -64,7 +64,7 @@ func handle_server_message(json_payload: String) -> void:
 		return
 	
 	if json["message_type"] == "asset_created":
-		create_deployed_asset(json["type"], json["image_path"], json["description"], Vector2(json["size"]["x"], json["size"]["y"]), Vector2(json["position"]["x"], json["position"]["y"]), true, json["uuid"])
+		create_deployed_asset(json["type"], json["image_path"], json["description"], Vector2(json["size"]["x"], json["size"]["y"]), Vector2(json["position"]["x"], json["position"]["y"]), json["rotation"], true, json["uuid"])
 	elif json["message_type"] == "asset_deleted":
 		delete_deployed_asset(json["uuid"])
 	elif json["message_type"] == "asset_layer_reordered":
@@ -82,21 +82,22 @@ func handle_server_message(json_payload: String) -> void:
 	else:
 		push_error("Don't know how to handle \"%s\" message type!" % json["message_type"])
 
-func create_deployed_asset(type: String, image_path: String, description: String, size: Vector2, position: Vector2, server_command: bool = false, uuid: String = "NULL"):
+func create_deployed_asset(type: String, image_path: String, description: String, size: Vector2, position: Vector2, rotation: float, server_command: bool = false, uuid: String = "NULL"):
 	var deployable = DeployedAsset.new()
 	
 	deployable.texture = load(image_path)
 	
 	if uuid != "NULL":
-		deployable.create(type, image_path, description, size, position, uuid)
+		deployable.create(type, image_path, description, size, position, rotation, uuid)
 	else:
-		deployable.create(type, image_path, description, size, position)
+		deployable.create(type, image_path, description, size, position, rotation)
 		
 	deployable.gui_input.connect(deployable._on_gui_input)
 	
 	deployable.expand_mode = deployable.EXPAND_IGNORE_SIZE
 	deployable.custom_minimum_size = size
 	deployable.position = position
+	deployable.rotation = rotation
 	
 	var canvas = get_tree().root.find_child("Canvas", true, false)
 	canvas.add_child(deployable)

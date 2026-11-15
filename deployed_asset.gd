@@ -130,7 +130,7 @@ func _physics_process(delta: float) -> void:
 			pivot_point = global_position + pivot_offset.rotated(rotation)
 			info["pivot_point"] = pivot_point
 
-func create(type: String, image_path: String, description: String, size: Vector2, position: Vector2, uuid: String = generate_uuid()):
+func create(type: String, image_path: String, description: String, size: Vector2, position: Vector2, rotation: float, uuid: String = generate_uuid()):
 	var txt_file_path = "res://assets/" + str(type) + "s/descriptions/" + str(type) + "_descriptions.txt"
 	var file = FileAccess.open(txt_file_path, FileAccess.READ)
 	
@@ -141,6 +141,7 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	custom_minimum_size = size
 	info["size"] = size
 	info["position"] = position
+	info["rotation"] = rotation
 	info["layer"] = 0
 	
 	pivot_offset = size / 2
