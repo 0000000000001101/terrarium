@@ -82,7 +82,13 @@ When resizing existing deployed asset:
 When rotating existing deployed asset:
 
 {
-	"message_type": "asset_rotated",
-	"uuid": String,
-	"rotation": int
+    "message_type": "asset_rotated",
+    "uuid": String,
+    "rotation": int
+}
+
+When requesting the current terrarium state/scene:
+
+{
+    "message_type": "request_state"
 }
