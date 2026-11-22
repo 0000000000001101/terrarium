@@ -12,6 +12,8 @@ var starting_angle
 var diff_x
 var diff_y
 
+@onready var layer_menu = get_tree().root.find_child("LayerMenu", true, false)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# creating and adding all buttons
@@ -57,6 +59,12 @@ func _process(delta: float) -> void:
 func on_delete_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			# remove the asset from the LayerMenu
+			for label in layer_menu.get_child(0).get_child(0).get_child(0).get_children(): # going through children until get children of LayerVBoxContainer
+				if label.text == get_parent().info["name"]:
+					label.queue_free()
+			
+			# delete the asset
 			print("delete layer button clicked")
 			ServerManager.asset_deleted(get_parent())
 			self.get_parent().queue_free()
@@ -64,7 +72,10 @@ func on_delete_button_clicked(event: InputEvent) -> void:
 func on_reorder_layer_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			print("reorder layer button clicked")
+			if layer_menu.visible:
+				hide_layer_menu()
+			else:
+				show_layer_menu()
 	
 func on_rotate_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -100,3 +111,21 @@ func on_mirror_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			get_parent().flip_h = not get_parent().flip_h;
+
+func show_layer_menu() -> void:
+	layer_menu.global_position = get_viewport().get_mouse_position() + Vector2(30, -20)
+	if layer_menu.global_position.x + layer_menu.get_child(0).size.x > get_viewport_rect().size.x:
+		layer_menu.global_position.x -= layer_menu.get_child(0).size.x * 2
+		print(layer_menu.get_child(0).size.x)
+	layer_menu.show()
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(layer_menu, "scale:y", 1.0, 0.25).from(0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	
+func hide_layer_menu() -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(layer_menu, "scale:y", 0.0, 0.25).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK)
+	
+	tween.finished.connect(func(): 
+		layer_menu.hide()
+	)

@@ -9,6 +9,4 @@ func _process(delta: float) -> void:
 	pass
 
 func on_button_pressed() -> void:
-	print("on button pressed called")
-	
 	get_parent().get_parent().description_button_pressed()

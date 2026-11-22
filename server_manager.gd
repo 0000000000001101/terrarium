@@ -91,7 +91,7 @@ func create_deployed_asset(type: String, image_path: String, description: String
 		deployable.create(type, image_path, description, size, position, rotation, uuid)
 	else:
 		deployable.create(type, image_path, description, size, position, rotation)
-		
+	
 	deployable.gui_input.connect(deployable._on_gui_input)
 	
 	deployable.expand_mode = deployable.EXPAND_IGNORE_SIZE
@@ -102,12 +102,15 @@ func create_deployed_asset(type: String, image_path: String, description: String
 	var canvas = get_tree().root.find_child("Canvas", true, false)
 	canvas.add_child(deployable)
 	
+	# Need to wait for child to be added to the tree before calling get_tree()
+	deployable.update_layer_menu()
+	
 	# name the asset (image_name)(number of existing "image_names" there already are).
 	var deployable_name = deployable.texture.resource_path.get_basename().get_file() # get name of the texture file without the file extension
 		
-	deployable.name = deployable_name + "_" + deployable.info["uuid"]
+	#deployable.name = deployable_name + "_" + deployable.info["uuid"]
 		
-	print(deployable.name)
+	#print(deployable.name)
 	
 	assets[deployable.info["uuid"]] = deployable
 	

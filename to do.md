@@ -20,7 +20,7 @@ MVP:
 
 &#x20;       Eventually I will need to get information from the server upon loading the scene for the first time to load in the deployed\_assets.
 
-  * Find another way to turn the data into a string. Right now JSON alphabetizes the array. I don't know if this is an issue or not, though.
+* Find another way to turn the data into a string. Right now JSON alphabetizes the array. I don't know if this is an issue or not, though.
 
 
 
@@ -41,7 +41,7 @@ MVP:
 * Change the size of the resize menu when the asset is resized
 * Allow the layering of the assets be changed around.
 
-  * Add asset names so that 
+  * Add asset names so that
 
     * Add rename functionality?
 * Make a description pop-up when the description button is pressed.
@@ -57,9 +57,17 @@ MVP:
 
 
 
+* Deal with duplicate numbered named in the LayerMenu
+
+
+
 Future goals:
 
 
 
 * Background selector?
+
+
+
+* Double click on the resize button to scale the image while keeping the aspect ratio
 

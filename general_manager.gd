@@ -4,6 +4,8 @@ const CANVAS_SCENE_PATH := "res://scenes/canvas.tscn"
 var glass_selected := 0
 var glass_path: String
 
+var asset_layer: Array[String]
+
 # pattern is "Glass" followed by anything
 @onready var glass1 = get_tree().root.find_child("Glass1", true, false)
 @onready var glass2 = get_tree().root.find_child("Glass2", true, false)
@@ -21,10 +23,8 @@ func _process(delta: float) -> void:
 	pass
 
 func on_glass1_selected() -> void:
-	#print("glass 1 pressed")
 	glass_selected = 1
 	glass_path = glass1.texture_normal.get_path()
-	#print(glass_path)
 	change_scene_to_canvas()
 	#var scene2_path = load(CANVAS_SCENE_PATH)
 	#if scene2_path:
@@ -34,13 +34,11 @@ func on_glass1_selected() -> void:
 		#print("could not load " + CANVAS_SCENE_PATH)
 
 func on_glass2_selected() -> void:
-	#print("glass 2 pressed")
 	glass_selected = 2
 	glass_path = "res://assets/glass/glass jar 1.png"
 	change_scene_to_canvas()
 	
 func on_glass3_selected() -> void:
-	#print("glass 3 pressed")
 	glass_selected = 3
 	glass_path = glass3.texture_normal.get_path()
 	change_scene_to_canvas()

@@ -17,6 +17,9 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijla6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [node name="Terrarium" type="Control" unique_id=471686723]
 layout_mode = 3
 anchors_preset = 15
@@ -282,3 +285,57 @@ popup/item_8/id = 8
 popup/item_9/text = "Inu"
 popup/item_9/id = 9
 script = ExtResource("9_rletj")
+
+[node name="LayerMenu" type="Control" parent="." unique_id=1639569455]
+visible = false
+z_index = 200
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -248.0
+offset_bottom = 394.0
+grow_horizontal = 0
+
+[node name="LayerPanelContainer" type="PanelContainer" parent="LayerMenu" unique_id=2106906807]
+propagate_maximum_size = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer" unique_id=1482191651]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer" unique_id=653919714]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="LabelLabel" type="Label" parent="LayerMenu/LayerPanelContainer/VBoxContainer/MarginContainer" unique_id=290941995]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Layers"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LayerMarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer" unique_id=2068486861]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LayerScrollContainer" type="ScrollContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer/LayerMarginContainer" unique_id=220028901]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ijla6")
+
+[node name="LayerVBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer/LayerMarginContainer/LayerScrollContainer" unique_id=856390063]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4

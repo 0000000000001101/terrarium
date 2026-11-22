@@ -152,6 +152,7 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	pivot_point = info["position"] + pivot_offset
 	info["pivot_point"] = pivot_point
 	
+	# name temporarily lacks a number to access description
 	var new_name = image_path.split(".png")[0]
 	# Godot built in name property replaces ivalid characters (:, /) with underscores
 	new_name = new_name.split("/")[-1]
@@ -194,7 +195,26 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	
 	# position is relative to the parent node, while global_position is relative to the entire game world
 	description_box.get_node("Button").position = Vector2(- description_box.get_node("PanelContainer").get_size().x - description_box.get_node("Button").get_size().x, 0);
-	print(description_box.get_size().x);
+	#print(description_box.get_size().x);
+	
+func update_layer_menu() -> void:
+	#await get_tree().process_frame
+	var label = Label.new()
+	
+	var count = 0
+	for menu in get_tree().get_nodes_in_group("radial_menus"):
+		if menu.get_parent().info["name"].contains(self.info["name"]):
+			count += 1
+	
+	info["name"] = info["name"] + " " + str(count)
+	name = info["name"]
+	print("name: " + name)
+	label.text = info["name"]
+	label.add_theme_font_size_override("font_size", 16)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD
+	label.set_script(preload("res://layer_menu_label.gd"))
+	
+	get_tree().root.find_child("LayerVBoxContainer", true, false).add_child(label)
 
 # UUID follows an 8-4-4-4-12 hex-and dash format
 func generate_uuid() -> String:
@@ -321,6 +341,8 @@ func hide_radial_menu() -> void:
 	for button in $RadialMenu.get_children():
 		tween.tween_property(button, "position", Vector2.ZERO, RadialMenu.speed).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 		tween.tween_property(button, "scale", Vector2(0.5, 0.5), RadialMenu.speed).set_trans(Tween.TRANS_LINEAR)
+	
+	$RadialMenu.hide_layer_menu()
 
 func show_resize_menu() -> void:
 	$ResizeMenu.show()
@@ -370,3 +392,29 @@ func description_button_pressed() -> void:
 		hide_description()
 	else:
 		show_description()
+
+func show_layer_menu() -> void:
+	# should only have one description open at once
+	if any_description_showing:
+		for description in get_tree().get_nodes_in_group("description boxes"):
+			description.get_parent().hide_description()
+	
+	var tween = get_tree().create_tween().set_parallel(true)
+	
+	description_box.show()
+	tween.tween_property(description_box, "scale:y", 1.0, 0.25).from(0.0).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	any_description_showing = true
+	
+func hide_layer_menu() -> void:
+	# ideally id like to add an animation to this. closing upwards?
+	var tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property(description_box, "scale:y", 0.0, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	
+	tween.finished.connect(func():
+		description_box.hide()
+		any_description_showing = false
+	)
+
+func reorder_layer_button_pressed() -> void:
+	pass
