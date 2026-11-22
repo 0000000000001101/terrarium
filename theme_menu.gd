@@ -15,8 +15,8 @@ const THEMES = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	get_node("/root/Terrarium").theme = load(THEMES[0]) as Theme
 	get_popup().id_pressed.connect(_on_theme_selected)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

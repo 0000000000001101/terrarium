@@ -7,8 +7,7 @@ func _ready() -> void:
 	if GeneralManager.glass_selected == 0:
 		print("Error: No glass enclosure selected.")
 	glass.texture = load(GeneralManager.glass_path)
-	glass.size = Vector2(500, 500)
-	glass.position = Vector2(400, 100)
+	glass.position = Vector2(-100, 0)
 	add_child(glass)
 	
 	self.gui_input.connect(_on_gui_input)

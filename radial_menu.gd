@@ -17,28 +17,28 @@ func _ready() -> void:
 	# creating and adding all buttons
 	var delete_button = Button.new()
 	delete_button.name = "DeleteButton"
-	delete_button.icon = load("res://assets/smiley placeholder.png")
+	delete_button.icon = load("res://assets/delete button.png")
 	delete_button.flat = true # rid of the border
 	delete_button.gui_input.connect(on_delete_button_clicked)
 	self.add_child(delete_button)
 	
 	var rotate_button = Button.new()
 	rotate_button.name = "RotateButton"
-	rotate_button.icon = load("res://assets/smiley placeholder.png")
+	rotate_button.icon = load("res://assets/rotate button.png")
 	rotate_button.flat = true
 	rotate_button.gui_input.connect(on_rotate_button_clicked)
 	self.add_child(rotate_button)
 	
 	var reorder_layer_button = Button.new()
 	reorder_layer_button.name = "ReorderLayerButton"
-	reorder_layer_button.icon = load("res://assets/smiley placeholder.png")
-	reorder_layer_button.flat = true
+	reorder_layer_button.icon = load("res://assets/reorder layer button.png")
+	reorder_layer_button.flat = true;
 	reorder_layer_button.gui_input.connect(on_reorder_layer_button_clicked)
 	self.add_child(reorder_layer_button)
 	
 	var description_button = Button.new()
 	description_button.name = "DescriptionButton"
-	description_button.icon = load("res://assets/smiley placeholder.png")
+	description_button.icon = load("res://assets/information button.png")
 	description_button.flat = true # rid of the border
 	description_button.gui_input.connect(on_description_button_clicked)
 	self.add_child(description_button)

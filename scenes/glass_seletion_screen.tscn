@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cpx6hinxrxbb1"]
 
-[ext_resource type="Texture2D" uid="uid://c5rrqw1r844m7" path="res://assets/glass/glass jar 1.jpg" id="2_jfkud"]
-[ext_resource type="Texture2D" uid="uid://dw4co23281626" path="res://assets/animals/raccoon - Copy.jpg" id="2_m206c"]
+[ext_resource type="Texture2D" uid="uid://bnx5e44f03r47" path="res://assets/canvas texture 1.jpg" id="1_jfkud"]
+[ext_resource type="Texture2D" uid="uid://8wt6eyvhnm2k" path="res://assets/glass/glass jar 1.png" id="2_jfkud"]
 [ext_resource type="Texture2D" uid="uid://do35wtk6s1gxt" path="res://assets/glass/glass jar 2.webp" id="3_jwbxu"]
 [ext_resource type="Texture2D" uid="uid://co528kbgteorf" path="res://assets/glass/glass jar 3.jpg" id="4_m86fa"]
 
@@ -20,7 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_m206c")
+texture = ExtResource("1_jfkud")
 expand_mode = 1
 stretch_mode = 6
 

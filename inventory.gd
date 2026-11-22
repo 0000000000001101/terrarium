@@ -4,27 +4,17 @@ class_name Inventory
 extends Control
 
 const animal_images: Array[String] = [
-	"res://assets/animals/alabama beach mouse.jpg",
-	"res://assets/animals/angry hedgehog.png",
-	"res://assets/animals/dunkleosteus.jpg",
-	"res://assets/animals/rabbit - Copy.jpg",
-	"res://assets/animals/rabbit.jpg",
-	"res://assets/animals/raccoon - Copy.jpg",
-	"res://assets/animals/raccoon.jpg",
-	"res://assets/animals/short eared elephant shrew.jpg",
-	"res://assets/animals/storm the bat - Copy.jpg",
-	"res://assets/animals/storm the bat.jpg"
+	"res://assets/animals/Cubaris Sp. Rubber Ducky.png",
+	"res://assets/animals/Epipedobates Anthonyi.png",
+	"res://assets/animals/Eublepharis Macularius.png",
+	"res://assets/animals/Helix Pomatia.png"
 ]
 const plant_images: Array[String] = [
-	"res://assets/plants/baseball plant.jpg",
-	"res://assets/plants/belladonna lily.jpg",
-	"res://assets/plants/belladonna.jpg",
-	"res://assets/plants/bulb plant.webp",
-	"res://assets/plants/deep dark purple orchid.jpg",
-	"res://assets/plants/halloween flower.webp",
-	"res://assets/plants/poison hemlock.jpg",
-	"res://assets/plants/porcupine tomato.jpg",
-	"res://assets/plants/queen of the night.jpg"
+	"res://assets/plants/Aeschynanthus Sp. Thailand Varegiated.png",
+	"res://assets/plants/Biophytum Sensitivum.png",
+	"res://assets/plants/Cryptanthus Bivittatus.png",
+	"res://assets/plants/Marcgravia.png",
+	"res://assets/plants/Tradescantia Nanouk.png"
 ]
 
 # get tree elements once they load into the tree
@@ -43,7 +33,7 @@ func _ready() -> void:
 	print("inventory script running")
 	
 	# FIXME: This is temporary, until we have a connect to server scene.
-	ServerManager.connect_to_server("ws://127.0.0.1:8013")
+	# ServerManager.connect_to_server("ws://127.0.0.1:8013")
 	
 	# Set anchor settings to default
 	#set_anchors_preset(Control.PRESET_FULL_RECT)

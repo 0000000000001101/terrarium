@@ -21,10 +21,10 @@ func _process(delta: float) -> void:
 	pass
 
 func on_glass1_selected() -> void:
-	print("glass 1 pressed")
+	#print("glass 1 pressed")
 	glass_selected = 1
 	glass_path = glass1.texture_normal.get_path()
-	print(glass_path)
+	#print(glass_path)
 	change_scene_to_canvas()
 	#var scene2_path = load(CANVAS_SCENE_PATH)
 	#if scene2_path:
@@ -34,13 +34,13 @@ func on_glass1_selected() -> void:
 		#print("could not load " + CANVAS_SCENE_PATH)
 
 func on_glass2_selected() -> void:
-	print("glass 2 pressed")
+	#print("glass 2 pressed")
 	glass_selected = 2
-	glass_path = glass2.texture_normal.get_path()
+	glass_path = "res://assets/glass/glass jar 1.png"
 	change_scene_to_canvas()
 	
 func on_glass3_selected() -> void:
-	print("glass 3 pressed")
+	#print("glass 3 pressed")
 	glass_selected = 3
 	glass_path = glass3.texture_normal.get_path()
 	change_scene_to_canvas()

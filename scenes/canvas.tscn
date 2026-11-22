@@ -1,14 +1,18 @@
 [gd_scene format=3 uid="uid://di4cpdg5p45x7"]
 
-[ext_resource type="Texture2D" uid="uid://duvq8pdxibtgm" path="res://assets/canvas texture 2.jpg" id="1_75aqd"]
-[ext_resource type="Theme" uid="uid://cvjwhpryd4k74" path="res://themes/dark-electric-pink.tres" id="1_b5t36"]
+[ext_resource type="Theme" uid="uid://dwpyx7y0g76n3" path="res://themes/main_theme.tres" id="1_uoc13"]
 [ext_resource type="Script" uid="uid://cfdg7jpt640fy" path="res://radial_menu.gd" id="2_rjejc"]
+[ext_resource type="Texture2D" uid="uid://dcl4tn3a0mkjm" path="res://assets/background.png" id="2_rletj"]
 [ext_resource type="Script" uid="uid://du5ki3ia605oh" path="res://background.gd" id="3_b5t36"]
 [ext_resource type="Script" uid="uid://boq4lpht8ge2p" path="res://resize_menu.gd" id="4_d11g6"]
-[ext_resource type="Texture2D" uid="uid://bat10t80bfcty" path="res://assets/smiley placeholder.png" id="4_rjejc"]
-[ext_resource type="Texture2D" uid="uid://34yp6n7a6tox" path="res://icon.svg" id="4_uoc13"]
+[ext_resource type="Texture2D" uid="uid://ykwvclbgsbi7" path="res://assets/rotate button.png" id="5_bije7"]
+[ext_resource type="Texture2D" uid="uid://dx7d6wcrpoh72" path="res://assets/reorder layer button.png" id="6_cf5eo"]
 [ext_resource type="Script" uid="uid://bvtx6w1h45ye" path="res://inventory.gd" id="7_b5t36"]
+[ext_resource type="Texture2D" uid="uid://dsrja3g7jtj3n" path="res://assets/delete button.png" id="7_ijla6"]
+[ext_resource type="Texture2D" uid="uid://bmh3n33kcqxol" path="res://assets/information button.png" id="8_f3r5e"]
 [ext_resource type="Script" uid="uid://04h3ibcy5437" path="res://theme_menu.gd" id="9_rletj"]
+[ext_resource type="Texture2D" uid="uid://cqo7gkojgipxy" path="res://assets/tl-br resize button.png" id="10_3kc0y"]
+[ext_resource type="Texture2D" uid="uid://5rm3r2ifkymv" path="res://assets/tr-bl resize button.png" id="11_1i5pp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
 
@@ -21,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_b5t36")
+theme = ExtResource("1_uoc13")
 metadata/_edit_use_anchors_ = true
 
 [node name="Canvas" type="Control" parent="." unique_id=1168955981]
@@ -39,7 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_75aqd")
+texture = ExtResource("2_rletj")
 expand_mode = 1
 stretch_mode = 6
 script = ExtResource("3_b5t36")
@@ -59,22 +63,25 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 3.0500002
 anchor_bottom = 3.3500001
-icon = ExtResource("4_rjejc")
+icon = ExtResource("5_bije7")
 
 [node name="ReorderLayerButton" type="Button" parent="Canvas/RadialMenu" unique_id=448346531]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+icon = ExtResource("6_cf5eo")
 
 [node name="DeleteButton" type="Button" parent="Canvas/RadialMenu" unique_id=1343158982]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+icon = ExtResource("7_ijla6")
 
 [node name="DescriptionButton" type="Button" parent="Canvas/RadialMenu" unique_id=417347653]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
+icon = ExtResource("8_f3r5e")
 
 [node name="ResizeMenu" type="Control" parent="Canvas" unique_id=1672696623]
 visible = false
@@ -99,13 +106,13 @@ offset_transform_enabled = true
 focus_mode = 0
 focus_behavior_recursive = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_rletj")
-icon = ExtResource("4_rjejc")
+icon = ExtResource("10_3kc0y")
 
 [node name="ResizeButtonTopRight" type="Button" parent="Canvas/ResizeMenu" unique_id=783161729]
 layout_mode = 0
 offset_right = 8.0
 offset_bottom = 8.0
-icon = ExtResource("4_uoc13")
+icon = ExtResource("11_1i5pp")
 
 [node name="ResizeButtonBottomLeft" type="Button" parent="Canvas/ResizeMenu" unique_id=110525016]
 layout_mode = 0
@@ -113,7 +120,7 @@ offset_left = 287.0
 offset_top = 78.0
 offset_right = 423.0
 offset_bottom = 214.0
-icon = ExtResource("4_uoc13")
+icon = ExtResource("11_1i5pp")
 
 [node name="ResizeButtonBottomRight" type="Button" parent="Canvas/ResizeMenu" unique_id=18801262]
 layout_mode = 0
@@ -121,7 +128,7 @@ offset_left = 18.0
 offset_top = 250.0
 offset_right = 154.0
 offset_bottom = 386.0
-icon = ExtResource("4_uoc13")
+icon = ExtResource("10_3kc0y")
 
 [node name="Inventory" type="Control" parent="." unique_id=1553678007]
 layout_mode = 1
@@ -138,6 +145,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 27.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -264,3 +273,8 @@ popup/item_8/id = 8
 popup/item_9/text = "Inu"
 popup/item_9/id = 9
 script = ExtResource("9_rletj")
+
+[node name="Control" type="Control" parent="Inventory" unique_id=444710157]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
