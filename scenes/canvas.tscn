@@ -84,6 +84,11 @@ offset_right = 8.0
 offset_bottom = 8.0
 icon = ExtResource("8_f3r5e")
 
+[node name="Mirror Button" type="Button" parent="Canvas/RadialMenu" unique_id=56484318]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
 [node name="ResizeMenu" type="Control" parent="Canvas" unique_id=1672696623]
 visible = false
 custom_minimum_size = Vector2(400, 400)

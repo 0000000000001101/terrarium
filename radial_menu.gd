@@ -42,6 +42,13 @@ func _ready() -> void:
 	description_button.flat = true # rid of the border
 	description_button.gui_input.connect(on_description_button_clicked)
 	self.add_child(description_button)
+	
+	var mirror_button = Button.new()
+	mirror_button.name = "MirrorButton"
+	mirror_button.icon = load("res://assets/smiley placeholder.png")
+	mirror_button.flat = true # rid of the border
+	mirror_button.gui_input.connect(on_mirror_button_clicked)
+	self.add_child(mirror_button)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -88,3 +95,8 @@ func on_description_button_clicked(event: InputEvent) -> void:
 			
 			get_parent().hide_radial_menu();
 			get_parent().hide_resize_menu();
+
+func on_mirror_button_clicked(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			get_parent().flip_h = not get_parent().flip_h;

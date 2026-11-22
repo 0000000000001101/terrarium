@@ -294,14 +294,17 @@ func show_radial_menu() -> void:
 	
 	var angle = deg_to_rad(230)
 	for button in $RadialMenu.get_children():
-		if not button.name.contains("Description"):
+		if not button.name.contains("Description") and not button.name.contains("Mirror"):
 			# position math: first it rotates the assets around the radius, then centers the assets along the inner y-axis before adding an offset in relation to self's height #  - Vector2(0.0, size.y / 2 + $RadialMenu/DescriptionButton.size.y / 2 + 4 + 10)
 			# global_position here gets the position of the button before the tween runs, which is at the pivot point. So the pivot point is moved to the top of the image
 			tween.tween_property(button, "position", Vector2(RadialMenu.radius, 0).rotated(angle) - Vector2(0.0, $RadialMenu/RotateButton.global_position.rotated(-rotation).y - global_position.rotated(-rotation).y), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tween.tween_property(button, "scale", Vector2.ONE, RadialMenu.speed).from(Vector2(0.5, 0.5)).set_trans(Tween.TRANS_LINEAR)
 			angle += deg_to_rad(40)
-		else:
+		elif button.name.contains("Description"):
 			tween.tween_property(button, "position", Vector2(size.x / 2 + $RadialMenu/DescriptionButton.size.x / 2 + 4 + 10, 0.0), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tween.tween_property(button, "scale", Vector2.ONE, RadialMenu.speed).from(Vector2(0.5, 0.5)).set_trans(Tween.TRANS_LINEAR)
+		elif button.name.contains("Mirror"):
+			tween.tween_property(button, "position", Vector2(- size.x / 2 - $RadialMenu/DescriptionButton.size.x / 2 - 4 - 10, 0.0), RadialMenu.speed).from(Vector2.ZERO).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			tween.tween_property(button, "scale", Vector2.ONE, RadialMenu.speed).from(Vector2(0.5, 0.5)).set_trans(Tween.TRANS_LINEAR)
 
 func hide_radial_menu() -> void:
