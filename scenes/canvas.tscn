@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://04h3ibcy5437" path="res://theme_menu.gd" id="9_rletj"]
 [ext_resource type="Texture2D" uid="uid://cqo7gkojgipxy" path="res://assets/tl-br resize button.png" id="10_3kc0y"]
 [ext_resource type="Texture2D" uid="uid://5rm3r2ifkymv" path="res://assets/tr-bl resize button.png" id="11_1i5pp"]
+[ext_resource type="PackedScene" uid="uid://de1x2fcj480y" path="res://scenes/description.tscn" id="12_cf5eo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
 
@@ -130,6 +131,10 @@ offset_right = 154.0
 offset_bottom = 386.0
 icon = ExtResource("10_3kc0y")
 
+[node name="Description" parent="." unique_id=745521462 instance=ExtResource("12_cf5eo")]
+visible = false
+layout_mode = 1
+
 [node name="Inventory" type="Control" parent="." unique_id=1553678007]
 layout_mode = 1
 anchor_right = 0.25
@@ -179,7 +184,6 @@ clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
@@ -273,8 +277,3 @@ popup/item_8/id = 8
 popup/item_9/text = "Inu"
 popup/item_9/id = 9
 script = ExtResource("9_rletj")
-
-[node name="Control" type="Control" parent="Inventory" unique_id=444710157]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0

@@ -9,6 +9,7 @@ const animal_images: Array[String] = [
 	"res://assets/animals/Eublepharis Macularius.png",
 	"res://assets/animals/Helix Pomatia.png"
 ]
+
 const plant_images: Array[String] = [
 	"res://assets/plants/Aeschynanthus Sp. Thailand Varegiated.png",
 	"res://assets/plants/Biophytum Sensitivum.png",
@@ -16,6 +17,22 @@ const plant_images: Array[String] = [
 	"res://assets/plants/Marcgravia.png",
 	"res://assets/plants/Tradescantia Nanouk.png"
 ]
+
+# Issue with dynamically loading 
+const animal_descriptions := {
+	"Cubaris Sp. Rubber Ducky": "I am the duck",
+	"Epipedobates Anthonyi": "I am the frog",
+	"Eublepharis Macularius": "I am the gecko",
+	"Helix Pomatia": "I am the snail"
+}
+
+const plant_descriptions := {
+	"Aeschynanthus Sp. Thailand Varegiated": "1",
+	"Biophytum Sensitivum": "2",
+	"Cryptanthus Bivittatus": "3",
+	"Marcgravia": "4",
+	"Tradescantia Nanouk": "5"
+}
 
 # get tree elements once they load into the tree
 @onready var inventory = self

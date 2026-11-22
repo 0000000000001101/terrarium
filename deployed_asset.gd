@@ -21,6 +21,10 @@ var radial_menu_showing = false
 var menu_tween_active = false
 # only want one radial menu showing at once
 static var any_menu_showing = false
+static var any_description_showing = false
+
+const description_scene = preload("res://scenes/description.tscn");
+var description_box = description_scene.instantiate();
 
 # dict instead of solo variables so they can be called with a string passed from the server
 var info = {
@@ -148,7 +152,15 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	pivot_point = info["position"] + pivot_offset
 	info["pivot_point"] = pivot_point
 	
-	print("name: " + name)
+	var new_name = image_path.split(".png")[0]
+	# Godot built in name property replaces ivalid characters (:, /) with underscores
+	new_name = new_name.split("/")[-1]
+	info["name"] = new_name
+	
+	if type == "animal":
+		info["details"] = Inventory.animal_descriptions[info["name"]]
+	elif type == "plant":
+		info["details"] = Inventory.plant_descriptions[info["name"]]
 	
 	radial_menu = RadialMenu.new()
 	radial_menu.name = "RadialMenu"
@@ -164,6 +176,25 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	resize_menu.hide()
 	resize_menu.size = size
 	add_child(resize_menu)
+	
+	description_box.get_node("%Label").text = info["name"]
+	description_box.get_node("%RichTextLabel").text = info["details"]
+	
+	description_box.get_node("Button").set_script(preload("res://description_button.gd"))
+	
+	description_box.hide();
+	
+	# detach from immedate parent anchoring / ignore parent transform
+	description_box.top_level = true
+	add_child(description_box)
+	description_box.add_to_group("description boxes");
+	
+	# Set global position after child is added because add_child resets layout
+	description_box.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	
+	# position is relative to the parent node, while global_position is relative to the entire game world
+	description_box.get_node("Button").position = Vector2(- description_box.get_node("PanelContainer").get_size().x - description_box.get_node("Button").get_size().x, 0);
+	print(description_box.get_size().x);
 
 # UUID follows an 8-4-4-4-12 hex-and dash format
 func generate_uuid() -> String:
@@ -303,3 +334,36 @@ func hide_resize_menu() -> void:
 	for button in $ResizeMenu.get_children():
 		button.pivot_offset = (button.size + Vector2(8, 8)) / 2 # the margins are 4px on all sides
 		tween.tween_property(button, "scale", Vector2.ZERO, ResizeMenu.speed).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+
+func show_description() -> void:
+	# should only have one description open at once
+	if any_description_showing:
+		for description in get_tree().get_nodes_in_group("description boxes"):
+			description.get_parent().hide_description()
+	
+	var tween = get_tree().create_tween().set_parallel(true)
+	
+	description_box.show()
+	tween.tween_property(description_box, "scale:y", 1.0, 0.25).from(0.0).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	tween.finished.connect(func():
+		any_description_showing = false
+	)
+	
+	any_description_showing = true
+	
+func hide_description() -> void:
+	# ideally id like to add an animation to this. closing upwards?
+	var tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property(description_box, "scale:y", 0.0, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	
+	tween.finished.connect(func():
+		description_box.hide()
+		any_description_showing = false
+	)
+	
+func description_button_pressed() -> void:
+	if description_box.visible:
+		hide_description()
+	else:
+		show_description()

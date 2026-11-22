@@ -32,7 +32,7 @@ func _ready() -> void:
 	var reorder_layer_button = Button.new()
 	reorder_layer_button.name = "ReorderLayerButton"
 	reorder_layer_button.icon = load("res://assets/reorder layer button.png")
-	reorder_layer_button.flat = true;
+	reorder_layer_button.flat = true
 	reorder_layer_button.gui_input.connect(on_reorder_layer_button_clicked)
 	self.add_child(reorder_layer_button)
 	
@@ -84,4 +84,7 @@ func on_rotate_button_clicked(event: InputEvent) -> void:
 func on_description_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			print("description button clicked")
+			get_parent().description_button_pressed()
+			
+			get_parent().hide_radial_menu();
+			get_parent().hide_resize_menu();

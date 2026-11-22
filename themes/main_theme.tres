@@ -8,6 +8,21 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 corner_detail = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8pbte"]
+bg_color = Color(0.87058824, 0.8156863, 0.60784316, 1)
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1wqk"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.8029342, 0.69415814, 0.5434158, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydht1"]
 bg_color = Color(0.72113705, 0.5676632, 0.37912288, 1)
 
@@ -46,6 +61,9 @@ corner_radius_top_right = 10
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 22
 Label/styles/normal = SubResource("StyleBoxFlat_d11g6")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_8pbte")
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+RichTextLabel/styles/normal = SubResource("StyleBoxFlat_i1wqk")
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_ydht1")
 TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_unselected_color = Color(1, 1, 1, 1)
@@ -54,3 +72,4 @@ TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_rjgu6")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_puucq")
 TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_0x86e")
 TabContainer/styles/tabbar_background = SubResource("StyleBoxFlat_8gw6x")
+VBoxContainer/constants/separation = 20
