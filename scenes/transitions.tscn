@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://j7qfpqeaihcp"]
 
 [ext_resource type="Script" uid="uid://bojwsc3hnfy1s" path="res://transitions.gd" id="1_j06rq"]
-[ext_resource type="Texture2D" uid="uid://voawt03tc4f3" path="res://assets/plants/belladonna lily.jpg" id="1_shpo3"]
+[ext_resource type="Texture2D" uid="uid://dcl4tn3a0mkjm" path="res://assets/background.png" id="2_j06rq"]
 
 [node name="Transitions" type="CanvasLayer" unique_id=1314446204]
 script = ExtResource("1_j06rq")
@@ -13,6 +13,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_shpo3")
+texture = ExtResource("2_j06rq")
 expand_mode = 1
 stretch_mode = 6

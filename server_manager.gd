@@ -107,10 +107,6 @@ func create_deployed_asset(type: String, image_path: String, description: String
 	
 	# name the asset (image_name)(number of existing "image_names" there already are).
 	var deployable_name = deployable.texture.resource_path.get_basename().get_file() # get name of the texture file without the file extension
-		
-	#deployable.name = deployable_name + "_" + deployable.info["uuid"]
-		
-	#print(deployable.name)
 	
 	assets[deployable.info["uuid"]] = deployable
 	

@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://4oth1pswscsg"]
+
+[ext_resource type="Script" uid="uid://bq0uhnjuh4nps" path="res://scenes/load_in.gd" id="1_1v3ix"]
+[ext_resource type="Texture2D" uid="uid://jiw0o2drbyyq" path="res://assets/log in screen.png" id="1_p23uh"]
+[ext_resource type="Texture2D" uid="uid://dbu4ledyemcrv" path="res://assets/log in button skip connect to server.png" id="2_1v3ix"]
+[ext_resource type="Texture2D" uid="uid://c588ju701ekbp" path="res://assets/log in button skip server.png" id="3_a0bxl"]
+
+[node name="Control" type="Control" unique_id=156891973]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1v3ix")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1288463058]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_p23uh")
+
+[node name="Button" type="Button" parent="." unique_id=1579977835]
+visible = false
+layout_mode = 0
+offset_left = 211.0
+offset_top = 415.0
+offset_right = 471.0
+offset_bottom = 565.0
+text = "Connect to
+Server"
+
+[node name="Button2" type="Button" parent="." unique_id=177056005]
+visible = false
+layout_mode = 0
+offset_left = 577.0
+offset_top = 419.0
+offset_right = 829.0
+offset_bottom = 549.0
+text = "Skip Server
+Connection"
+
+[node name="ServerConnectButton" type="TextureButton" parent="." unique_id=392533851]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 428.0
+offset_right = 481.0
+offset_bottom = 578.0
+texture_normal = ExtResource("2_1v3ix")
+
+[node name="SkipServerButton" type="TextureButton" parent="." unique_id=1346016025]
+layout_mode = 0
+offset_left = 582.0
+offset_top = 426.0
+offset_right = 842.0
+offset_bottom = 576.0
+texture_normal = ExtResource("3_a0bxl")

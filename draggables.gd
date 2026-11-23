@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Godot creates children before parents. Wait for the parent (Inventory) to be created first
+	# Godot creates children before parents. Wait for the parent (inventory) to be created first
 	await get_tree().process_frame
 	
 	animal_assets = get_tree().get_nodes_in_group("animal_assets")
@@ -97,7 +97,7 @@ func create_drag_image(type:String, assets:Array, name, size: Vector2) -> void:
 	
 	var image_copy = TextureRect.new()
 	
-	# position the image_copy on top of the Inventory
+	# position the image_copy on top of the inventory
 	image_copy.z_index = 1000
 	
 	if type == "animal":

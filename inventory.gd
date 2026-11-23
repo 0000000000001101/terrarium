@@ -96,7 +96,8 @@ func _ready() -> void:
 	print("inventory script running")
 	
 	# FIXME: This is temporary, until we have a connect to server scene.
-	# ServerManager.connect_to_server("ws://127.0.0.1:8013")
+	if not GeneralManager.skip_server_connection:
+		ServerManager.connect_to_server("ws://127.0.0.1:8013")
 	
 	# Set anchor settings to default
 	#set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -229,7 +230,7 @@ func print_sizing_details() -> void:
 	print("\nasset_size: " + str(asset_size))
 	print("anchor_right: " + str(tab_container.anchor_right))
 	print("viewport: " + str(get_viewport_rect().size))
-	print("Inventory Global Position: ", inventory.global_position)
+	print("inventory Global Position: ", inventory.global_position)
 	print("tab Global Position: ", tab_container.global_position)
 	print("")
 	

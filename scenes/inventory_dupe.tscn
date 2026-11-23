@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://rns7h3ib12nj"]
+
+[ext_resource type="Script" uid="uid://bvtx6w1h45ye" path="res://inventory.gd" id="1_l30pb"]
+[ext_resource type="Script" uid="uid://04h3ibcy5437" path="res://theme_menu.gd" id="2_tmyhr"]
+
+[node name="Inventory_d" type="Control" unique_id=326419536]
+layout_mode = 3
+anchor_right = 0.25
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+offset_transform_enabled = true
+script = ExtResource("1_l30pb")
+
+[node name="MyTabContainer_d" type="TabContainer" parent="." unique_id=1060606470]
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+current_tab = 0
+
+[node name="Animals" type="VBoxContainer" parent="MyTabContainer_d" unique_id=419220452]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="AnimalLabelMargin_d" type="MarginContainer" parent="MyTabContainer_d/Animals" unique_id=1617572211]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 2
+
+[node name="AnimalLabel" type="Label" parent="MyTabContainer_d/Animals/AnimalLabelMargin_d" unique_id=922421090]
+custom_minimum_size = Vector2(250, 50)
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 1
+offset_transform_enabled = true
+text = "Animals"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="AnimalMargin_d" type="MarginContainer" parent="MyTabContainer_d/Animals" unique_id=62792906]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="AnimalScroll_d" type="ScrollContainer" parent="MyTabContainer_d/Animals/AnimalMargin_d" unique_id=553339561]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="animalVBox_d" type="VBoxContainer" parent="MyTabContainer_d/Animals/AnimalMargin_d/AnimalScroll_d" unique_id=840155434]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+offset_transform_enabled = true
+
+[node name="Plants" type="VBoxContainer" parent="MyTabContainer_d" unique_id=657495978]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="PlantLabelMargin_d" type="MarginContainer" parent="MyTabContainer_d/Plants" unique_id=1467410636]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 2
+
+[node name="PlantLabel" type="Label" parent="MyTabContainer_d/Plants/PlantLabelMargin_d" unique_id=2060085333]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Plants"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[node name="PlantMargin_d" type="MarginContainer" parent="MyTabContainer_d/Plants" unique_id=688484077]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlantScroll_d" type="ScrollContainer" parent="MyTabContainer_d/Plants/PlantMargin_d" unique_id=1416174626]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="plantVBox_d" type="VBoxContainer" parent="MyTabContainer_d/Plants/PlantMargin_d/PlantScroll_d" unique_id=1617214883]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+offset_transform_enabled = true
+
+[node name="MenuButton_d" type="MenuButton" parent="." unique_id=2119956332]
+visible = false
+z_index = 100
+custom_minimum_size = Vector2(22, 22)
+custom_maximum_size = Vector2(22, 22)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -22.0
+offset_top = 1.0
+offset_right = 4.0
+offset_bottom = 24.0
+grow_horizontal = 0
+focus_mode = 0
+text = "≡"
+flat = false
+item_count = 10
+popup/item_0/text = "Main Theme"
+popup/item_0/id = 0
+popup/item_1/text = "Catppuccin Mocha"
+popup/item_1/id = 1
+popup/item_2/text = "Catppuccin Macchiato"
+popup/item_2/id = 2
+popup/item_3/text = "Catppuccin Frappé"
+popup/item_3/id = 3
+popup/item_4/text = "Catppuccin Latte"
+popup/item_4/id = 4
+popup/item_5/text = "Dark Electric Pink"
+popup/item_5/id = 5
+popup/item_6/text = "Fox Friend"
+popup/item_6/id = 6
+popup/item_7/text = "Wolf Kami"
+popup/item_7/id = 7
+popup/item_8/text = "Rice Pudding"
+popup/item_8/id = 8
+popup/item_9/text = "Inu"
+popup/item_9/id = 9
+script = ExtResource("2_tmyhr")
