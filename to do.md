@@ -61,6 +61,18 @@ MVP:
 
 
 
+* Include in the descriptions:
+
+  * General description, maybe a fun fact?
+  * What kind of habitat do they need? Temperature, humidity, soil?
+  * What does their diet consist of?
+
+
+
+* Maybe add a photo to the description tab so it's clear what species is being talked about.
+
+
+
 Future goals:
 
 

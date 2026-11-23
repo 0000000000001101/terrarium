@@ -1,5 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://dwpyx7y0g76n3"]
 
+[ext_resource type="FontFile" uid="uid://wua5y7k6yv72" path="res://fonts/PlayfairDisplay-VariableFont_wght.ttf" id="1_rjgu6"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d11g6"]
 bg_color = Color(0.93424183, 0.9427569, 0.7584793, 1)
 corner_radius_top_left = 5
@@ -61,13 +63,16 @@ corner_radius_top_right = 10
 [resource]
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/font_sizes/font_size = 22
+Label/fonts/font = ExtResource("1_rjgu6")
 Label/styles/normal = SubResource("StyleBoxFlat_d11g6")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_8pbte")
 RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+RichTextLabel/fonts/normal_font = ExtResource("1_rjgu6")
 RichTextLabel/styles/normal = SubResource("StyleBoxFlat_i1wqk")
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_ydht1")
 TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)
 TabContainer/colors/font_unselected_color = Color(1, 1, 1, 1)
+TabContainer/fonts/font = ExtResource("1_rjgu6")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_vxwtt")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_rjgu6")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_puucq")
