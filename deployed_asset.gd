@@ -188,6 +188,7 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	# detach from immedate parent anchoring / ignore parent transform
 	description_box.top_level = true
 	add_child(description_box)
+	description_box.z_index = 600
 	description_box.add_to_group("description boxes");
 	
 	# Set global position after child is added because add_child resets layout
@@ -201,9 +202,9 @@ func update_layer_menu() -> void:
 	#await get_tree().process_frame
 	var label = Label.new()
 	
-	var count = 0
+	var count = 1
 	for menu in get_tree().get_nodes_in_group("radial_menus"):
-		if menu.get_parent().info["name"].contains(self.info["name"]):
+		if menu.get_parent().info["name"] == info["name"] + " " + str(count):
 			count += 1
 	
 	info["name"] = info["name"] + " " + str(count)
@@ -215,6 +216,7 @@ func update_layer_menu() -> void:
 	label.set_script(preload("res://layer_menu_label.gd"))
 	
 	get_tree().root.find_child("LayerVBoxContainer", true, false).add_child(label)
+	get_tree().root.find_child("LayerVBoxContainer", true, false).move_child(label, 0)
 
 # UUID follows an 8-4-4-4-12 hex-and dash format
 func generate_uuid() -> String:

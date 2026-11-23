@@ -60,8 +60,10 @@ func on_delete_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			# remove the asset from the LayerMenu
-			for label in layer_menu.get_child(0).get_child(0).get_child(0).get_children(): # going through children until get children of LayerVBoxContainer
-				if label.text == get_parent().info["name"]:
+			for label in layer_menu.get_child(0).get_child(0).get_child(1).get_child(0).get_child(0).get_children(): # going through children until get children of LayerVBoxContainer
+				#print(label.text + " , " + get_parent().name)
+				if label.text == get_parent().name:
+					label.get_parent().remove_child(label)
 					label.queue_free()
 			
 			# delete the asset

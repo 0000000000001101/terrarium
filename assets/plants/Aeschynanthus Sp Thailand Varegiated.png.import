@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bggbyk0vj0r1o"
-path="res://.godot/imported/Cubaris Sp. Rubber Ducky.png-2898c5edfc62a853d772af1e59c2cc6c.ctex"
+uid="uid://iwxbtesv1yy6"
+path="res://.godot/imported/Aeschynanthus Sp Thailand Varegiated.png-1df4bdd38afd69ee6abc43912892dbe8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/animals/Cubaris Sp. Rubber Ducky.png"
-dest_files=["res://.godot/imported/Cubaris Sp. Rubber Ducky.png-2898c5edfc62a853d772af1e59c2cc6c.ctex"]
+source_file="res://assets/plants/Aeschynanthus Sp Thailand Varegiated.png"
+dest_files=["res://.godot/imported/Aeschynanthus Sp Thailand Varegiated.png-1df4bdd38afd69ee6abc43912892dbe8.ctex"]
 
 [params]
 

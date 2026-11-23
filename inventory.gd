@@ -4,14 +4,14 @@ class_name Inventory
 extends Control
 
 const animal_images: Array[String] = [
-	"res://assets/animals/Cubaris Sp. Rubber Ducky.png",
+	"res://assets/animals/Cubaris Sp Rubber Ducky.png",
 	"res://assets/animals/Epipedobates Anthonyi.png",
 	"res://assets/animals/Eublepharis Macularius.png",
 	"res://assets/animals/Helix Pomatia.png"
 ]
 
 const plant_images: Array[String] = [
-	"res://assets/plants/Aeschynanthus Sp. Thailand Varegiated.png",
+	"res://assets/plants/Aeschynanthus Sp Thailand Varegiated.png",
 	"res://assets/plants/Biophytum Sensitivum.png",
 	"res://assets/plants/Cryptanthus Bivittatus.png",
 	"res://assets/plants/Marcgravia.png",
@@ -20,14 +20,14 @@ const plant_images: Array[String] = [
 
 # Issue with dynamically loading 
 const animal_descriptions := {
-	"Cubaris Sp. Rubber Ducky": "I am the duck",
+	"Cubaris Sp Rubber Ducky": "I am the duck",
 	"Epipedobates Anthonyi": "I am the frog",
 	"Eublepharis Macularius": "I am the gecko",
 	"Helix Pomatia": "I am the snail"
 }
 
 const plant_descriptions := {
-	"Aeschynanthus Sp. Thailand Varegiated": "1",
+	"Aeschynanthus Sp Thailand Varegiated": "1",
 	"Biophytum Sensitivum": "2",
 	"Cryptanthus Bivittatus": "3",
 	"Marcgravia": "4",

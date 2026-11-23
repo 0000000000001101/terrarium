@@ -102,9 +102,13 @@ func reorder_layer_menu() -> void:
 	# iterate through the labels, find the asset with that name and set its z index
 	var labels = get_parent().get_children()
 	var index = get_tree().root.find_child("ResizeMenu", true, false).get_index() + 1
+	# I want the top label to have the highest priority (which is closer to the bottom on the tree)
+	var num_indices = get_tree().root.find_child("Description", true, false).get_index() + 1 - index
+	
 	for label in labels: # 10 as a buffer zone in case we want anything painted in below
 		print("label text: " + label.text)
-		get_tree().root.find_child(label.text, true, false).z_index = 10 + labels.find(label)
-		get_tree().root.find_child(label.text, true, false).get_parent().move_child(get_tree().root.find_child(label.text, true, false), index)
+		#get_tree().root.find_child(label.text, true, false).z_index = 10 + labels.find(label)
+		get_tree().root.find_child(label.text, true, false).get_parent().move_child(get_tree().root.find_child(label.text, true, false), index + num_indices)
+		num_indices -= 1
 		index += 1
 	print("\n\n")
