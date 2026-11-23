@@ -47,7 +47,7 @@ func _ready() -> void:
 	
 	var mirror_button = Button.new()
 	mirror_button.name = "MirrorButton"
-	mirror_button.icon = load("res://assets/smiley placeholder.png")
+	mirror_button.icon = load("res://assets/mirror button.png")
 	mirror_button.flat = true # rid of the border
 	mirror_button.gui_input.connect(on_mirror_button_clicked)
 	self.add_child(mirror_button)

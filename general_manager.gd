@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 
 func on_glass1_selected() -> void:
 	glass_selected = 1
-	glass_path = glass1.texture_normal.get_path()
+	glass_path = "res://assets/glass/glass jar 1.png"
 	change_scene_to_canvas()
 	#var scene2_path = load(CANVAS_SCENE_PATH)
 	#if scene2_path:
@@ -35,12 +35,12 @@ func on_glass1_selected() -> void:
 
 func on_glass2_selected() -> void:
 	glass_selected = 2
-	glass_path = "res://assets/glass/glass jar 1.png"
+	glass_path = "res://assets/glass/glass jar 2.png"
 	change_scene_to_canvas()
 	
 func on_glass3_selected() -> void:
 	glass_selected = 3
-	glass_path = glass3.texture_normal.get_path()
+	glass_path = "res://assets/glass/glass jar 3.png"
 	change_scene_to_canvas()
 
 func change_scene_to_canvas() -> void:

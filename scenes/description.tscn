@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://de1x2fcj480y"]
 
-[ext_resource type="Texture2D" uid="uid://bat10t80bfcty" path="res://assets/smiley placeholder.png" id="1_62k28"]
+[ext_resource type="Texture2D" uid="uid://dmuoui26oycio" path="res://assets/description collapse button.png" id="1_xl7vw"]
 [ext_resource type="Script" uid="uid://c7sygdc8stafa" path="res://description_button.gd" id="2_xl7vw"]
 
 [node name="Description" type="Control" unique_id=745521462]
@@ -56,6 +56,7 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 40.0
 grow_horizontal = 0
-icon = ExtResource("1_62k28")
+icon = ExtResource("1_xl7vw")
+flat = true
 expand_icon = true
 script = ExtResource("2_xl7vw")

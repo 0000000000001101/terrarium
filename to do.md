@@ -57,7 +57,7 @@ MVP:
 
 
 
-* Deal with duplicate numbered named in the LayerMenu
+* Fix the issue of multiple descriptions showing at once
 
 
 

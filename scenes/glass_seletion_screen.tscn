@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cpx6hinxrxbb1"]
 
-[ext_resource type="Texture2D" uid="uid://bnx5e44f03r47" path="res://assets/canvas texture 1.jpg" id="1_jfkud"]
-[ext_resource type="Texture2D" uid="uid://8wt6eyvhnm2k" path="res://assets/glass/glass jar 1.png" id="2_jfkud"]
-[ext_resource type="Texture2D" uid="uid://do35wtk6s1gxt" path="res://assets/glass/glass jar 2.webp" id="3_jwbxu"]
-[ext_resource type="Texture2D" uid="uid://co528kbgteorf" path="res://assets/glass/glass jar 3.jpg" id="4_m86fa"]
+[ext_resource type="Texture2D" uid="uid://3qgwfom8rvxr" path="res://assets/glass selection screen.png" id="1_jfkud"]
+[ext_resource type="Texture2D" uid="uid://c42v5r3smeio6" path="res://assets/glass/glass jar 1 icon.png" id="2_jfkud"]
+[ext_resource type="Texture2D" uid="uid://bgeotvegm3wob" path="res://assets/glass/glass jar 2 icon.png" id="3_jfkud"]
+[ext_resource type="Texture2D" uid="uid://mqd08c8g5x7b" path="res://assets/glass/glass jar 3 icon.png" id="4_jfkud"]
 
 [node name="GlassSeletionScreen" type="Control" unique_id=1382801681]
 layout_mode = 3
@@ -26,31 +26,31 @@ stretch_mode = 6
 
 [node name="Glass1" type="TextureButton" parent="." unique_id=551229953]
 layout_mode = 0
-offset_left = 237.0
-offset_top = 163.0
-offset_right = 365.0
-offset_bottom = 291.0
+offset_left = 201.0
+offset_top = 400.0
+offset_right = 366.0
+offset_bottom = 565.0
 texture_normal = ExtResource("2_jfkud")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Glass2" type="TextureButton" parent="." unique_id=1607987429]
 layout_mode = 0
-offset_left = 499.0
-offset_top = 161.0
-offset_right = 627.0
-offset_bottom = 289.0
-texture_normal = ExtResource("3_jwbxu")
+offset_left = 455.0
+offset_top = 400.0
+offset_right = 620.0
+offset_bottom = 565.0
+texture_normal = ExtResource("3_jfkud")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="Glass3" type="TextureButton" parent="." unique_id=659615439]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 0
-offset_left = 765.0
-offset_top = 166.0
-offset_right = 893.0
-offset_bottom = 294.0
-texture_normal = ExtResource("4_m86fa")
+offset_left = 707.0
+offset_top = 400.0
+offset_right = 872.0
+offset_bottom = 565.0
+texture_normal = ExtResource("4_jfkud")
 ignore_texture_size = true
 stretch_mode = 0
