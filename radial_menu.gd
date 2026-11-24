@@ -116,13 +116,21 @@ func on_mirror_button_clicked(event: InputEvent) -> void:
 
 func show_layer_menu() -> void:
 	layer_menu.global_position = get_viewport().get_mouse_position() + Vector2(30, -20)
+	
 	if layer_menu.global_position.x + layer_menu.get_child(0).size.x > get_viewport_rect().size.x:
 		layer_menu.global_position.x -= layer_menu.get_child(0).size.x * 2
 		print(layer_menu.get_child(0).size.x)
+	
 	layer_menu.show()
+	await get_tree().process_frame
+	
+	# for some reason, LayerPanelContainer is child number 1 instead of 0
+	layer_menu.get_node(get_parent().info["name"] + "label_image").global_position = layer_menu.find_child(get_parent().info["name"] + "label", true, false).global_position - Vector2(25 + 7, 0)
+	print("label name: " + str(layer_menu.find_child(get_parent().info["name"] + "label", true, false).global_position))
 	
 	var tween = get_tree().create_tween()
 	tween.tween_property(layer_menu, "scale:y", 1.0, 0.25).from(0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	await tween.finished
 	
 func hide_layer_menu() -> void:
 	var tween = get_tree().create_tween()
@@ -131,3 +139,5 @@ func hide_layer_menu() -> void:
 	tween.finished.connect(func(): 
 		layer_menu.hide()
 	)
+	
+	await tween.finished

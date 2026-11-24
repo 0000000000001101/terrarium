@@ -111,4 +111,13 @@ func reorder_layer_menu() -> void:
 		get_tree().root.find_child(label.text, true, false).get_parent().move_child(get_tree().root.find_child(label.text, true, false), index + num_indices)
 		num_indices -= 1
 		index += 1
+		
+		# does not move the image belonging to the label currently being moved. global_position is off because frame has not fully been processed yet (idk it's weird)
+		get_tree().root.find_child("LayerMenu", true, false).get_node(label.text + "label_image").global_position = get_tree().root.find_child(label.text + "label", true, false).global_position - Vector2(25 + 7, 0)
+		
+	await get_tree().process_frame
+	get_tree().root.find_child("LayerMenu", true, false).get_node(self.text + "label_image").global_position = get_tree().root.find_child(self.text + "label", true, false).global_position - Vector2(25 + 7, 0)
+	#print("bee: " + str(get_tree().root.find_child("LayerMenu", true, false).get_node(self.text + "label_image")))
+	#print("cee: " + str(get_tree().root.find_child(self.text + "label", true, false).global_position))
+		
 	print("\n\n")

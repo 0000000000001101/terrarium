@@ -196,8 +196,16 @@ func create(type: String, image_path: String, description: String, size: Vector2
 	# Set global position after child is added because add_child resets layout
 	description_box.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	
+	var texture_rect = description_box.get_node("TextureRect")
+	
 	# position is relative to the parent node, while global_position is relative to the entire game world
-	description_box.get_node("Button").position = Vector2(- description_box.get_node("PanelContainer").get_size().x - description_box.get_node("Button").get_size().x, 0);
+	description_box.get_node("Button").position = Vector2(- description_box.get_node("PanelContainer").get_size().x - description_box.get_node("Button").get_size().x - texture_rect.get_size().x - 20 - 10, 20);
+	texture_rect.position = Vector2(- description_box.get_node("PanelContainer").get_size().x - description_box.get_node("Button").get_size().x - 20, description_box.find_child("Label").get_size().y / 2 + 15); # margin is 20
+	
+	texture_rect.texture = load(info["image_path"])
+	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	texture_rect.size = Vector2(50, 50)
 	#print(description_box.get_size().x);
 	
 func update_layer_menu() -> void:
@@ -211,6 +219,7 @@ func update_layer_menu() -> void:
 	
 	info["name"] = info["name"] + " " + str(count)
 	name = info["name"]
+	label.name = info["name"] + "label"
 	print("name: " + name)
 	label.text = info["name"]
 	label.add_theme_font_size_override("font_size", 16)
@@ -219,6 +228,29 @@ func update_layer_menu() -> void:
 	
 	get_tree().root.find_child("LayerVBoxContainer", true, false).add_child(label)
 	get_tree().root.find_child("LayerVBoxContainer", true, false).move_child(label, 0)
+	
+	var image = TextureRect.new()
+	# add child before calling global_position
+	get_tree().root.find_child("LayerMenu", true, false).add_child(image)
+	#get_tree().root.find_child("LayerMenu", true, false).move_child(image, 0)
+	
+	image.name = info["name"] + "label_image"
+	image.texture = load(info["image_path"])
+	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	image.stretch_mode = TextureRect.STRETCH_SCALE
+	image.size = Vector2(25, 25)
+	
+	await get_tree().process_frame
+	image.global_position = label.global_position - Vector2(25 + 7, 0)
+	print("label global position: " + str(label.global_position))
+	print("label y size: " + str(label.size.y))
+	image.z_index = 900
+	
+	var labels = get_tree().root.find_child("LayerVBoxContainer", true, false).get_children()
+	
+	for item in labels: # 10 as a buffer zone in case we want anything painted in below
+		# does not move the image belonging to the label currently being moved. global_position is off because frame has not fully been processed yet (idk it's weird)
+		get_tree().root.find_child("LayerMenu", true, false).get_node(item.text + "label_image").global_position = get_tree().root.find_child(item.text + "label", true, false).global_position - Vector2(25 + 7, 0)
 
 # UUID follows an 8-4-4-4-12 hex-and dash format
 func generate_uuid() -> String:

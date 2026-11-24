@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dcl4tn3a0mkjm" path="res://assets/background.png" id="2_rletj"]
 [ext_resource type="Script" uid="uid://du5ki3ia605oh" path="res://background.gd" id="3_b5t36"]
 [ext_resource type="Script" uid="uid://boq4lpht8ge2p" path="res://resize_menu.gd" id="4_d11g6"]
+[ext_resource type="Texture2D" uid="uid://bat10t80bfcty" path="res://assets/smiley placeholder.png" id="4_rjejc"]
 [ext_resource type="Texture2D" uid="uid://ykwvclbgsbi7" path="res://assets/rotate button.png" id="5_bije7"]
 [ext_resource type="Texture2D" uid="uid://dx7d6wcrpoh72" path="res://assets/reorder layer button.png" id="6_cf5eo"]
 [ext_resource type="Texture2D" uid="uid://dsrja3g7jtj3n" path="res://assets/delete button.png" id="7_ijla6"]
@@ -13,6 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://5rm3r2ifkymv" path="res://assets/tr-bl resize button.png" id="11_1i5pp"]
 [ext_resource type="PackedScene" uid="uid://de1x2fcj480y" path="res://scenes/description.tscn" id="12_cf5eo"]
 [ext_resource type="PackedScene" uid="uid://un73fb4e5hoc" path="res://scenes/inventory.tscn" id="13_bije7"]
+[ext_resource type="Texture2D" uid="uid://c81uk2eh4bbqq" path="res://assets/screenshot icon.png" id="15_f3r5e"]
+[ext_resource type="Script" uid="uid://cbq7jf70itcya" path="res://scenes/screenshot_button.gd" id="16_f3r5e"]
+[ext_resource type="Texture2D" uid="uid://dljy6b74psf53" path="res://assets/camera overlay.webp" id="17_3kc0y"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
 
@@ -173,36 +177,82 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cf5eo")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer" unique_id=1482191651]
+[node name="MarginContainer2" type="MarginContainer" parent="LayerMenu/LayerPanelContainer" unique_id=709976442]
 layout_mode = 2
+theme_override_constants/margin_left = 32
 
-[node name="MarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer" unique_id=653919714]
+[node name="VBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2" unique_id=1482191651]
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="MarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer" unique_id=653919714]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="LabelLabel" type="Label" parent="LayerMenu/LayerPanelContainer/VBoxContainer/MarginContainer" unique_id=290941995]
+[node name="LabelLabel" type="Label" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer/MarginContainer" unique_id=290941995]
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-14.555, 0)
+offset_transform_scale = Vector2(1.1, 1)
 theme_override_font_sizes/font_size = 16
 text = "Layers"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="LayerMarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer" unique_id=2068486861]
+[node name="LayerMarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer" unique_id=2068486861]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="LayerScrollContainer" type="ScrollContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer/LayerMarginContainer" unique_id=220028901]
+[node name="LayerScrollContainer" type="ScrollContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer/LayerMarginContainer" unique_id=220028901]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ijla6")
 
-[node name="LayerVBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer/VBoxContainer/LayerMarginContainer/LayerScrollContainer" unique_id=856390063]
+[node name="LayerVBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer/LayerMarginContainer/LayerScrollContainer" unique_id=856390063]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 4
+
+[node name="TextureRect" type="TextureRect" parent="LayerMenu" unique_id=1852343764]
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 32.0
+offset_bottom = 31.0
+texture = ExtResource("4_rjejc")
+expand_mode = 1
+
+[node name="ScreenshotButton" type="TextureButton" parent="." unique_id=1740373371]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -63.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("15_f3r5e")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("16_f3r5e")
+
+[node name="ScreenshotMessage" type="TextureRect" parent="." unique_id=80944744]
+visible = false
+layout_mode = 0
+offset_left = 279.0
+offset_top = -28.0
+offset_right = 1106.0
+offset_bottom = 752.0
+texture = ExtResource("17_3kc0y")

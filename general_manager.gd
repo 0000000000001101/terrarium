@@ -5,7 +5,7 @@ const GLASS_SCENE_PATH := "res://scenes/glass_selection_screen.tscn"
 var glass_selected := 0
 var glass_path: String
 
-var skip_server_connection := false
+var skip_server_connection := true
 
 @onready var glass1 = get_tree().root.find_child("Glass1", true, false)
 @onready var glass2 = get_tree().root.find_child("Glass2", true, false)
@@ -85,20 +85,19 @@ func _on_server_connect_button_up() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(server_connect_button, "scale", Vector2.ONE, 0.05).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.finished.connect(func():
+		skip_server_connection = true
 		change_scene_to_glass()
 	)
 	
 func _on_skip_server_button_down() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(skip_server_button, "scale", Vector2(1.2, 1.2), 0.05).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
-	tween.finished.connect(func():
-		skip_server_connection = true
-	)
 	
 func _on_skip_server_button_up() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(skip_server_button, "scale", Vector2.ONE, 0.05).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.finished.connect(func():
+		skip_server_connection = true
 		change_scene_to_glass()
 	)
 
