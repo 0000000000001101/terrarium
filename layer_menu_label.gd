@@ -22,7 +22,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# The simplest way to connect this to server layer reordering may be the following:
 	#if self.text:
-		#server_reorder_layer_menu()
+		#server_reorder_layer_menu() # lack of testing. bypassing for now
 	pass
 
 func on_gui_input(event: InputEvent) -> void:

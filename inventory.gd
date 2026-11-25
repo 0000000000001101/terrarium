@@ -97,7 +97,7 @@ func _ready() -> void:
 	
 	# FIXME: This is temporary, until we have a connect to server scene.
 	if not GeneralManager.skip_server_connection:
-		ServerManager.connect_to_server("ws://127.0.0.1:8013")
+		ServerManager.connect_to_server("ws://38.131.191.219:8013/")
 	
 	# Set anchor settings to default
 	#set_anchors_preset(Control.PRESET_FULL_RECT)
