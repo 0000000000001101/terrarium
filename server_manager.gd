@@ -144,7 +144,8 @@ func reorder_deployed_asset_layer(uuid: String, new_layer: int) -> void:
 	if target:
 		target.z_index = new_layer
 		target.info["layer"] = new_layer
-
+		
+	
 
 func glass_selected() -> void:
 	var data = {

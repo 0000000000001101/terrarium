@@ -60,7 +60,14 @@ func on_delete_button_clicked(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			# remove the asset from the LayerMenu
-			for label in layer_menu.get_child(0).get_child(0).get_child(1).get_child(0).get_child(0).get_children(): # going through children until get children of LayerVBoxContainer
+			#print("1: " + str(layer_menu))
+			#print("2: " + str(layer_menu.get_child(0)))
+			#print("3: " + str(layer_menu.get_child(0).get_child(0)))
+			#print("4: " + str(layer_menu.get_child(0).get_child(0).get_child(0)))
+			#print("5: " + str(layer_menu.get_child(0).get_child(0).get_child(0).get_child(0)))
+			#print("6: " + str(layer_menu.get_child(0).get_child(0).get_child(0).get_child(0).get_child(0)))
+			
+			for label in layer_menu.get_child(0).get_child(0).get_child(0).get_child(0).get_child(0).get_children(): # going through children until get children of LayerVBoxContainer
 				#print(label.text + " , " + get_parent().name)
 				if label.text == get_parent().name:
 					label.get_parent().remove_child(label)
@@ -69,6 +76,7 @@ func on_delete_button_clicked(event: InputEvent) -> void:
 			# delete the asset
 			print("delete layer button clicked")
 			ServerManager.asset_deleted(get_parent())
+			self.get_parent().get_parent().remove_child(get_parent())
 			self.get_parent().queue_free()
 
 func on_reorder_layer_button_clicked(event: InputEvent) -> void:
@@ -124,7 +132,6 @@ func show_layer_menu() -> void:
 	layer_menu.show()
 	await get_tree().process_frame
 	
-	# for some reason, LayerPanelContainer is child number 1 instead of 0
 	layer_menu.get_node(get_parent().info["name"] + "label_image").global_position = layer_menu.find_child(get_parent().info["name"] + "label", true, false).global_position - Vector2(25 + 7, 0)
 	print("label name: " + str(layer_menu.find_child(get_parent().info["name"] + "label", true, false).global_position))
 	

@@ -1,3 +1,4 @@
+# global script
 extends Label
 
 var selected := false
@@ -19,6 +20,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# The simplest way to connect this to server layer reordering may be the following:
+	#if self.text:
+		#server_reorder_layer_menu()
 	pass
 
 func on_gui_input(event: InputEvent) -> void:
@@ -101,6 +105,7 @@ func on_gui_input(event: InputEvent) -> void:
 func reorder_layer_menu() -> void:
 	# iterate through the labels, find the asset with that name and set its z index
 	var labels = get_parent().get_children()
+	print("first parent: " + str(get_parent()))
 	var index = get_tree().root.find_child("ResizeMenu", true, false).get_index() + 1
 	# I want the top label to have the highest priority (which is closer to the bottom on the tree)
 	var num_indices = get_tree().root.find_child("Description", true, false).get_index() + 1 - index
@@ -108,16 +113,47 @@ func reorder_layer_menu() -> void:
 	for label in labels: # 10 as a buffer zone in case we want anything painted in below
 		print("label text: " + label.text)
 		#get_tree().root.find_child(label.text, true, false).z_index = 10 + labels.find(label)
-		get_tree().root.find_child(label.text, true, false).get_parent().move_child(get_tree().root.find_child(label.text, true, false), index + num_indices)
-		num_indices -= 1
-		index += 1
-		
-		# does not move the image belonging to the label currently being moved. global_position is off because frame has not fully been processed yet (idk it's weird)
-		get_tree().root.find_child("LayerMenu", true, false).get_node(label.text + "label_image").global_position = get_tree().root.find_child(label.text + "label", true, false).global_position - Vector2(25 + 7, 0)
+		if get_tree().root.find_child(label.text, true, false):
+			get_tree().root.find_child(label.text, true, false).get_parent().move_child(get_tree().root.find_child(label.text, true, false), index + num_indices)
+			get_tree().root.find_child(label.text, true, false).info["layer"] = index + num_indices
+			num_indices -= 1
+			index += 1
+			
+			# does not move the image belonging to the label currently being moved. global_position is off because frame has not fully been processed yet (idk it's weird)
+			get_tree().root.find_child("LayerMenu", true, false).get_node(label.text + "label_image").global_position = get_tree().root.find_child(label.text + "label", true, false).global_position - Vector2(25 + 7, 0)
 		
 	await get_tree().process_frame
 	get_tree().root.find_child("LayerMenu", true, false).get_node(self.text + "label_image").global_position = get_tree().root.find_child(self.text + "label", true, false).global_position - Vector2(25 + 7, 0)
 	#print("bee: " + str(get_tree().root.find_child("LayerMenu", true, false).get_node(self.text + "label_image")))
 	#print("cee: " + str(get_tree().root.find_child(self.text + "label", true, false).global_position))
+	
+	print("\n\n")
+	
+func server_reorder_layer_menu() -> void:
+	# iterate through the labels, find the asset with that name and set its z index
+	# I need the "parent" here to be LayerVBoxContainer
+	var labels = get_tree().root.find_child("LayerVBoxContainer", true, false).get_children()
+	print("parent: " + str(get_parent()))
+	var index = get_tree().root.find_child("ResizeMenu", true, false).get_index() + 1
+	# I want the top label to have the highest priority (which is closer to the bottom on the tree)
+	var num_indices = get_tree().root.find_child("Description", true, false).get_index() + 1 - index
+	
+	for label in labels: # 10 as a buffer zone in case we want anything painted in below
+		print("label: " + str(label))
 		
+		get_tree().root.find_child(label.text, true, false).get_parent().move_child(get_tree().root.find_child(label.text, true, false), get_tree().root.find_child(label.text, true, false).info["layer"])
+		
+		# does not move the image belonging to the label currently being moved. global_position is off because frame has not fully been processed yet (idk it's weird)
+		get_tree().root.find_child("LayerMenu", true, false).get_node(label.text + "label_image").global_position = get_tree().root.find_child(label.text + "label", true, false).global_position - Vector2(25 + 7, 0)
+		
+	await get_tree().process_frame
+	
+	# Since I'm no longer calling this function from within this file, the labels should all be added to the tree and I shouldn't need this portion anymore.
+	#get_tree().root.find_child("LayerMenu", true, false).get_node(self.text + "label_image").global_position = get_tree().root.find_child(self.text + "label", true, false).global_position - Vector2(25 + 7, 0)
+	#
+	#print("self.text: " + self.text)
+	#print("layermenu: " + str(get_tree().root.find_child("LayerMenu", true, false)))
+	#print("self.text + 'label_image'" + str(get_tree().root.find_child("LayerMenu", true, false).get_node(self.text + "label_image")))
+	#print("self.text + 'label'" + str(get_tree().root.find_child(self.text + "label", true, false)))
+	
 	print("\n\n")

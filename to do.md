@@ -83,3 +83,12 @@ Future goals:
 
 * Double click on the resize button to scale the image while keeping the aspect ratio
 
+
+
+Bugs: (either fix or avoid showing)
+
+
+
+* Deleting an asset and having it delete from the reorder menu
+* Resizing breaks stuff for some reason idrk why
+
