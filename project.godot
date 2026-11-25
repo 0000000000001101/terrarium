@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 ServerManager="*uid://bbpv2a3cbjf6l"
 GeneralManager="*uid://1obimbxvg6xa"
 Transitions="*uid://j7qfpqeaihcp"
-LayerMenuLabel="uid://vynuccdcgawv"
+LayerMenuLabel="*uid://vynuccdcgawv"
 
 [display]
 
