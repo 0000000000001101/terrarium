@@ -1,0 +1,258 @@
+[gd_scene format=3 uid="uid://di4cpdg5p45x7"]
+
+[ext_resource type="Theme" uid="uid://dwpyx7y0g76n3" path="res://themes/main_theme.tres" id="1_uoc13"]
+[ext_resource type="Script" uid="uid://cfdg7jpt640fy" path="res://radial_menu.gd" id="2_rjejc"]
+[ext_resource type="Texture2D" uid="uid://dcl4tn3a0mkjm" path="res://assets/background.png" id="2_rletj"]
+[ext_resource type="Script" uid="uid://du5ki3ia605oh" path="res://background.gd" id="3_b5t36"]
+[ext_resource type="Script" uid="uid://boq4lpht8ge2p" path="res://resize_menu.gd" id="4_d11g6"]
+[ext_resource type="Texture2D" uid="uid://bat10t80bfcty" path="res://assets/smiley placeholder.png" id="4_rjejc"]
+[ext_resource type="Texture2D" uid="uid://ykwvclbgsbi7" path="res://assets/rotate button.png" id="5_bije7"]
+[ext_resource type="Texture2D" uid="uid://dx7d6wcrpoh72" path="res://assets/reorder layer button.png" id="6_cf5eo"]
+[ext_resource type="Texture2D" uid="uid://dsrja3g7jtj3n" path="res://assets/delete button.png" id="7_ijla6"]
+[ext_resource type="Texture2D" uid="uid://bmh3n33kcqxol" path="res://assets/information button.png" id="8_f3r5e"]
+[ext_resource type="Texture2D" uid="uid://cqo7gkojgipxy" path="res://assets/tl-br resize button.png" id="10_3kc0y"]
+[ext_resource type="Texture2D" uid="uid://5rm3r2ifkymv" path="res://assets/tr-bl resize button.png" id="11_1i5pp"]
+[ext_resource type="PackedScene" uid="uid://de1x2fcj480y" path="res://scenes/description.tscn" id="12_cf5eo"]
+[ext_resource type="PackedScene" uid="uid://un73fb4e5hoc" path="res://scenes/inventory.tscn" id="13_bije7"]
+[ext_resource type="Texture2D" uid="uid://c81uk2eh4bbqq" path="res://assets/screenshot icon.png" id="15_f3r5e"]
+[ext_resource type="Script" uid="uid://cbq7jf70itcya" path="res://scenes/screenshot_button.gd" id="16_f3r5e"]
+[ext_resource type="Texture2D" uid="uid://dljy6b74psf53" path="res://assets/camera overlay.webp" id="17_3kc0y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rletj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cf5eo"]
+bg_color = Color(0.87058824, 0.8156863, 0.60784316, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijla6"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Terrarium" type="Control" unique_id=471686723]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_uoc13")
+metadata/_edit_use_anchors_ = true
+
+[node name="Canvas" type="Control" parent="." unique_id=1168955981]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Canvas" unique_id=1663474647]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rletj")
+expand_mode = 1
+stretch_mode = 6
+script = ExtResource("3_b5t36")
+
+[node name="RadialMenu" type="Control" parent="Canvas" unique_id=685899327]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+offset_left = 571.0
+offset_top = 278.0
+offset_right = 611.0
+offset_bottom = 318.0
+script = ExtResource("2_rjejc")
+
+[node name="RotateButton" type="Button" parent="Canvas/RadialMenu" unique_id=711746267]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 3.0500002
+anchor_bottom = 3.3500001
+icon = ExtResource("5_bije7")
+
+[node name="ReorderLayerButton" type="Button" parent="Canvas/RadialMenu" unique_id=448346531]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("6_cf5eo")
+
+[node name="DeleteButton" type="Button" parent="Canvas/RadialMenu" unique_id=1343158982]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("7_ijla6")
+
+[node name="DescriptionButton" type="Button" parent="Canvas/RadialMenu" unique_id=417347653]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("8_f3r5e")
+
+[node name="Mirror Button" type="Button" parent="Canvas/RadialMenu" unique_id=56484318]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ResizeMenu" type="Control" parent="Canvas" unique_id=1672696623]
+visible = false
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("4_d11g6")
+
+[node name="ResizeButtonTopLeft" type="Button" parent="Canvas/ResizeMenu" unique_id=183402888]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -89.0
+offset_top = 245.0
+offset_right = 47.0
+offset_bottom = 381.0
+offset_transform_enabled = true
+focus_mode = 0
+focus_behavior_recursive = 1
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rletj")
+icon = ExtResource("10_3kc0y")
+
+[node name="ResizeButtonTopRight" type="Button" parent="Canvas/ResizeMenu" unique_id=783161729]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+icon = ExtResource("11_1i5pp")
+
+[node name="ResizeButtonBottomLeft" type="Button" parent="Canvas/ResizeMenu" unique_id=110525016]
+layout_mode = 0
+offset_left = 287.0
+offset_top = 78.0
+offset_right = 423.0
+offset_bottom = 214.0
+icon = ExtResource("11_1i5pp")
+
+[node name="ResizeButtonBottomRight" type="Button" parent="Canvas/ResizeMenu" unique_id=18801262]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 250.0
+offset_right = 154.0
+offset_bottom = 386.0
+icon = ExtResource("10_3kc0y")
+
+[node name="Description" parent="." unique_id=745521462 instance=ExtResource("12_cf5eo")]
+visible = false
+layout_mode = 1
+
+[node name="Inventory" parent="." unique_id=326419536 instance=ExtResource("13_bije7")]
+layout_mode = 1
+
+[node name="LayerMenu" type="Control" parent="." unique_id=1639569455]
+visible = false
+z_index = 200
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -248.0
+offset_bottom = 394.0
+grow_horizontal = 0
+
+[node name="LayerPanelContainer" type="PanelContainer" parent="LayerMenu" unique_id=2106906807]
+propagate_maximum_size = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cf5eo")
+
+[node name="MarginContainer2" type="MarginContainer" parent="LayerMenu/LayerPanelContainer" unique_id=709976442]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2" unique_id=1482191651]
+layout_mode = 2
+offset_transform_enabled = true
+
+[node name="MarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer" unique_id=653919714]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="LabelLabel" type="Label" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer/MarginContainer" unique_id=290941995]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-14.555, 0)
+offset_transform_scale = Vector2(1.1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Layers"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LayerMarginContainer" type="MarginContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer" unique_id=2068486861]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LayerScrollContainer" type="ScrollContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer/LayerMarginContainer" unique_id=220028901]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ijla6")
+
+[node name="LayerVBoxContainer" type="VBoxContainer" parent="LayerMenu/LayerPanelContainer/MarginContainer2/VBoxContainer/LayerMarginContainer/LayerScrollContainer" unique_id=856390063]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="TextureRect" type="TextureRect" parent="LayerMenu" unique_id=1852343764]
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 32.0
+offset_bottom = 31.0
+texture = ExtResource("4_rjejc")
+expand_mode = 1
+
+[node name="ScreenshotButton" type="TextureButton" parent="." unique_id=1740373371]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -63.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("15_f3r5e")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("16_f3r5e")
+
+[node name="ScreenshotMessage" type="TextureRect" parent="." unique_id=80944744]
+visible = false
+layout_mode = 0
+offset_left = 279.0
+offset_top = -28.0
+offset_right = 1106.0
+offset_bottom = 752.0
+texture = ExtResource("17_3kc0y")

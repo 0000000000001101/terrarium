@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://cpx6hinxrxbb1"]
+
+[ext_resource type="Texture2D" uid="uid://3qgwfom8rvxr" path="res://assets/glass selection screen.png" id="1_pnus0"]
+[ext_resource type="Texture2D" uid="uid://c42v5r3smeio6" path="res://assets/glass/glass jar 1 icon.png" id="2_80uef"]
+[ext_resource type="Texture2D" uid="uid://bgeotvegm3wob" path="res://assets/glass/glass jar 2 icon.png" id="3_wdddb"]
+[ext_resource type="Texture2D" uid="uid://mqd08c8g5x7b" path="res://assets/glass/glass jar 3 icon.png" id="4_iepov"]
+
+[node name="GlassSeletionScreen" type="Control" unique_id=1382801681]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1211873777]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_pnus0")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Glass1" type="TextureButton" parent="." unique_id=551229953]
+layout_mode = 0
+offset_left = 201.0
+offset_top = 400.0
+offset_right = 366.0
+offset_bottom = 565.0
+texture_normal = ExtResource("2_80uef")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Glass2" type="TextureButton" parent="." unique_id=1607987429]
+layout_mode = 0
+offset_left = 455.0
+offset_top = 400.0
+offset_right = 620.0
+offset_bottom = 565.0
+texture_normal = ExtResource("3_wdddb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Glass3" type="TextureButton" parent="." unique_id=659615439]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 0
+offset_left = 707.0
+offset_top = 400.0
+offset_right = 872.0
+offset_bottom = 565.0
+texture_normal = ExtResource("4_iepov")
+ignore_texture_size = true
+stretch_mode = 0
