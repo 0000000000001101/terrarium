@@ -85,7 +85,7 @@ func _on_server_connect_button_up() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(server_connect_button, "scale", Vector2.ONE, 0.05).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 	tween.finished.connect(func():
-		skip_server_connection = true
+		skip_server_connection = false
 		change_scene_to_glass()
 	)
 	
